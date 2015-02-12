@@ -149,7 +149,7 @@ mainMenu.init = function(){
 }
 
 var gameScreen = new Screen(false, true);
-gameScreen.image = Textures.load("http://www.jar42.com/brine/laststop/images/grass.png");
+gameScreen.image = Textures.load("http://i.imgur.com/UtcYlza.png");
 
 //Override the empty init function to set some properties
 gameScreen.init = function(){
