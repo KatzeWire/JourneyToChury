@@ -252,12 +252,6 @@ gameScreen.init = function(){
 				
 				//Find the vertical distance between the sprite and the mouse
 				var yDis = gInput.mouse.y-this.y;
-				
-				//Use those distances and the arctangent to calculate the angle from the sprite to the mouse
-				//var angle = Math.atan2(yDis, xDis);
-				
-				//Set the sprite's rotation to the calculated angle
-				//this.rotation = angle;
 			}
 			
 			mySpriteCol.update = function(d){
@@ -313,12 +307,6 @@ gameScreen.init = function(){
 				
 				//Find the vertical distance between the sprite and the mouse
 				var yDis = gInput.mouse.y-this.y;
-				
-				//Use those distances and the arctangent to calculate the angle from the sprite to the mouse
-				//var angle = Math.atan2(yDis, xDis);
-				
-				//Set the sprite's rotation to the calculated angle
-				//this.rotation = angle;
 			}
 }
 
