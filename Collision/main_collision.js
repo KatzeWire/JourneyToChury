@@ -149,7 +149,7 @@ mainMenu.init = function(){
 }
 
 var gameScreen = new Screen(false, true);
-gameScreen.image = Textures.load("http://i.imgur.com/UtcYlza.png");
+gameScreen.image = Textures.load("http://i.imgur.com/5BOdpGT.png");
 
 //Override the empty init function to set some properties
 gameScreen.init = function(){
@@ -160,26 +160,46 @@ gameScreen.init = function(){
     //Create new Sprites
 			var mySprite = new Sprite();
 			var mySpriteCol = new Sprite();
+			var metSprite = new Sprite();
+			var metSpriteCol = new Sprite();
 			
-			//Set its dimensions
+			//Set dimensions
 			mySprite.width = 256;
 			mySprite.height = 256;
 			mySpriteCol.width = 256;
 			mySpriteCol.height = 256;
+			metSprite.width = 15;
+			metSprite.height = 15;
+			metSpriteCol.width = 15;
+			metSpriteCol.height = 15;
 			
 			//Shift the sprite so that its origin is at its center
 			//The offset is negative because we are moving the sprite relative to its origin and not the origin relative to the sprite
 			mySprite.xoffset = -mySprite.width/2;
 			mySprite.yoffset = -mySprite.height/2;
-			mySpriteCol.xoffset = -mySprite.width/2;
-			mySpriteCol.yoffset = -mySprite.height/2;
+			mySpriteCol.xoffset = -mySpriteCol.width/2;
+			mySpriteCol.yoffset = -mySpriteCol.height/2;
+			metSprite.xoffset = -metSprite.width/2;
+			metSprite.yoffset = -metSprite.height/2;
+			metSpriteCol.xoffset = -metSpriteCol.width/2;
+			metSpriteCol.yoffset = -metSpriteCol.height/2;
 			
 			//Set the sprite's texture
 			mySprite.image = Textures.load("http://i.imgur.com/1zAqAlr.png");
-			mySpriteCol.image = Textures.load("http://i.imgur.com/mMPbkg3.png")
+			mySpriteCol.image = Textures.load("http://i.imgur.com/mMPbkg3.png");
+			metSprite.image = Textures.load("http://i.imgur.com/Yo95hzI.png");
+			metSpriteCol.image = Textures.load("http://i.imgur.com/oE1Juk7.png");
+			
+			//x and y start for meteor sprites
+			metSprite.x = canvas.width/2;
+			metSprite.y = canvas.height/2;
+			metSpriteCol.x = canvas.width/2;
+			metSpriteCol.y = canvas.height/2;
 			
 			//Add the sprite to the world
 			this.stage.addChild(mySpriteCol);
+			this.stage.addChild(metSpriteCol);
+			this.stage.addChild(metSprite);
 			this.stage.addChild(mySprite);
 			
 			//A
@@ -255,6 +275,12 @@ gameScreen.init = function(){
 			}
 			
 			mySpriteCol.update = function(d){
+				
+				//to check if basic collision is working
+				if( hitbox(this, metSpriteCol) ){
+					console.log("INTERSECTION!!!!")
+				}
+				
 				//Define a speed to move at
 				var speed = 2;
 				
@@ -348,3 +374,20 @@ gInput.addFunc(27, function(){
         screenMan.push(pauseMenu);
     }
 });
+
+//determines if sprite is within the bounds of another sprite
+function hitbox(spriteA, spriteB){
+    /*if((spriteA.x < (spriteB.x + spriteB.width) && spriteA.x > spriteB.x) && (spriteA.y < (spriteB.y + spriteB.height) && spriteA.y > spriteB.y)){
+        return true;
+    }
+    else if(((spriteA.x + spriteA.height) < (spriteB.x + spriteB.width) && (spriteA.x + spriteA.height) > spriteB.x) && (spriteA.y < (spriteB.y + spriteB.height) && spriteA.y > spriteB.y)){
+        return true;
+    }
+    else if((spriteA.x < (spriteB.x + spriteB.width) && spriteA.x > spriteB.x) && ((spriteA.y + spriteA.height) < (spriteB.y + spriteB.height) && (spriteA.y+spriteA.height) > spriteB.y)){
+        return true;
+    }
+    else if(((spriteA.x+spriteA.height) < (spriteB.x + spriteB.width) && (spriteA.x+spriteA.height) > spriteB.x) && ((spriteA.y + spriteA.height) < (spriteB.y + spriteB.height) && (spriteA.y+spriteA.height) > spriteB.y)){
+        return true;
+    }
+    return false;*/
+}
