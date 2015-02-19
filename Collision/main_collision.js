@@ -434,12 +434,15 @@ function collision(spriteA, ax, ay, spriteB, bx, by){
 	//checking all pixels in overlapping area for collision
 	for(var xPix = xLeft; xPix < xRight; xPix++){
 		for(var yPix = yLeft; yPix < yRight; yPix++){
-			if((spriteA.alpha[((xPix-ax) + (yPix-ay)*aw)] !== 0) 
-				&&
-			   (spriteB.alpha[((xPix-bx) + (yPix-by)*bw)] !== 0)){
+			if((spriteA.alpha[((xPix-ax) + (yPix-ay)*aw)] >= 0.5)
+			   &&
+			   (spriteB.alpha[((xPix-bx) + (yPix-by)*bw)] >= 0.5)){
 			   		return true;
 			}
+			console.log(spriteA.alpha[((xPix-ax) + (yPix-ay)*aw)]);
+			console.log(spriteB.alpha[((xPix-bx) + (yPix-by)*bw)]);
 		}
 	}
 	
+	return false;
 }
