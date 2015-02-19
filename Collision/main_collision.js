@@ -164,14 +164,14 @@ gameScreen.init = function(){
 			var metSpriteCol = new Sprite();
 			
 			//Set dimensions
-			mySprite.width = 256;
-			mySprite.height = 256;
-			mySpriteCol.width = 256;
-			mySpriteCol.height = 256;
-			metSprite.width = 15;
-			metSprite.height = 15;
-			metSpriteCol.width = 15;
-			metSpriteCol.height = 15;
+			mySprite.width = 25;
+			mySprite.height = 25;
+			mySpriteCol.width = 25;
+			mySpriteCol.height = 25;
+			metSprite.width = 25;
+			metSprite.height = 25;
+			metSpriteCol.width = 25;
+			metSpriteCol.height = 25;
 			
 			//Shift the sprite so that its origin is at its center
 			//The offset is negative because we are moving the sprite relative to its origin and not the origin relative to the sprite
@@ -377,17 +377,22 @@ gInput.addFunc(27, function(){
 
 //determines if sprite is within the bounds of another sprite
 function hitbox(spriteA, spriteB){
-    /*if((spriteA.x < (spriteB.x + spriteB.width) && spriteA.x > spriteB.x) && (spriteA.y < (spriteB.y + spriteB.height) && spriteA.y > spriteB.y)){
-        return true;
-    }
-    else if(((spriteA.x + spriteA.height) < (spriteB.x + spriteB.width) && (spriteA.x + spriteA.height) > spriteB.x) && (spriteA.y < (spriteB.y + spriteB.height) && spriteA.y > spriteB.y)){
-        return true;
-    }
-    else if((spriteA.x < (spriteB.x + spriteB.width) && spriteA.x > spriteB.x) && ((spriteA.y + spriteA.height) < (spriteB.y + spriteB.height) && (spriteA.y+spriteA.height) > spriteB.y)){
-        return true;
-    }
-    else if(((spriteA.x+spriteA.height) < (spriteB.x + spriteB.width) && (spriteA.x+spriteA.height) > spriteB.x) && ((spriteA.y + spriteA.height) < (spriteB.y + spriteB.height) && (spriteA.y+spriteA.height) > spriteB.y)){
-        return true;
-    }
-    return false;*/
+    var cornerDistA = Math.sqrt(((spriteA.width/2) * (spriteA.width/2))+(((spriteA.height/2) * (spriteA.height/2))));
+    var cornerDistB = Math.sqrt(((spriteB.width/2) * (spriteB.width/2))+(((spriteB.height/2) * (spriteB.height/2))));
+    
+    //horizontal and vertical distance between the two sprites
+    var dx = spriteB.x - spriteA.x;
+    var dy = spriteB.y - spriteA.y;
+    
+    //distance between two sprites squared (accounts for negative)
+    var distSqr = dx * dx + dy * dy;
+    
+    //the total amount of distance from the bounding boxs' radii
+    var cornerDistSum = cornerDistA + cornerDistB;
+    
+    //console.log(dx, dy, distSqr, cornerDistSum);
+    
+    //determines if two sprites are within each others boundaries
+    if(distSqr < cornerDistSum * cornerDistSum) return true;
+    else return false;
 }
