@@ -164,14 +164,14 @@ gameScreen.init = function(){
 			var metSpriteCol = new Sprite();
 			
 			//Set dimensions
-			mySprite.width = 25;
-			mySprite.height = 25;
-			mySpriteCol.width = 25;
-			mySpriteCol.height = 25;
-			metSprite.width = 25;
-			metSprite.height = 25;
-			metSpriteCol.width = 25;
-			metSpriteCol.height = 25;
+			mySprite.width = 256;
+			mySprite.height = 256;
+			mySpriteCol.width = 256;
+			mySpriteCol.height = 256;
+			metSprite.width = 256;
+			metSprite.height = 256;
+			metSpriteCol.width = 256;
+			metSpriteCol.height = 256;
 			
 			//Shift the sprite so that its origin is at its center
 			//The offset is negative because we are moving the sprite relative to its origin and not the origin relative to the sprite
@@ -199,8 +199,8 @@ gameScreen.init = function(){
 			//Add the sprite to the world
 			this.stage.addChild(mySpriteCol);
 			this.stage.addChild(metSpriteCol);
-			this.stage.addChild(metSprite);
-			this.stage.addChild(mySprite);
+			//this.stage.addChild(metSprite);
+			//this.stage.addChild(mySprite);
 			
 			//A
 			gInput.addBool(65, "left");
@@ -278,7 +278,9 @@ gameScreen.init = function(){
 				
 				//to check if basic collision is working
 				if( hitbox(this, metSpriteCol) ){
-					console.log("INTERSECTION!!!!")
+					if(collision(this, this.x, this.y, metSpriteCol, metSpriteCol.x, metSpriteCol.y)){
+						console.log("INTERSECTION!!!!");
+					}
 				}
 				
 				//Define a speed to move at
@@ -390,9 +392,54 @@ function hitbox(spriteA, spriteB){
     //the total amount of distance from the bounding boxs' radii
     var cornerDistSum = cornerDistA + cornerDistB;
     
+    //test coordinates
     //console.log(dx, dy, distSqr, cornerDistSum);
     
     //determines if two sprites are within each others boundaries
     if(distSqr < cornerDistSum * cornerDistSum) return true;
     else return false;
+}
+
+function collision(spriteA, ax, ay, spriteB, bx, by){
+	
+	//no floating points for exact pixels
+	ax = Math.round(ax);
+	ay = Math.round(ay);
+	bx = Math.round(bx);
+	by = Math.round(by);
+	
+	//adjustable width and heights of sprites
+	var aw = spriteA.width,
+	    ah = spriteA.height,
+	    bw = spriteB.width,
+	    bh = spriteB.height;
+	    
+	//account for centering assuming all sprites have origin at center
+	ax -= (aw/2 + 0.5) << 0;
+	ay -= (ah/2 + 0.5) << 0;
+	bx -= (bw/2 + 0.5) << 0;
+	by -= (bh/2 + 0.5) << 0;
+	
+	//find top left and bottom right corners of overlapping area
+	//added constants to account for rotation
+	var xLeft = Math.max(ax, bx),
+		yLeft = Math.max(ay, by),
+		xRight = Math.min(ax+aw, bx+bw),	 
+		yRight = Math.min(ay+ah, by+bh);
+		
+	//automatically return false if top left is not to the left of bottom right
+	if( xLeft >= xRight || yLeft >= yRight) return false;
+	
+		
+	//checking all pixels in overlapping area for collision
+	for(var xPix = xLeft; xPix < xRight; xPix++){
+		for(var yPix = yLeft; yPix < yRight; yPix++){
+			if((spriteA.alpha[((xPix-ax) + (yPix-ay)*aw)] !== 0) 
+				&&
+			   (spriteB.alpha[((xPix-bx) + (yPix-by)*bw)] !== 0)){
+			   		return true;
+			}
+		}
+	}
+	
 }
