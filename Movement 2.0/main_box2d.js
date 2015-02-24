@@ -161,8 +161,9 @@ gameScreen.init = function(){
 			var mySprite = new Sprite();
 			var metSprite = new Sprite();
 			
+			//set dimensions for sprite and upload textures
 			spriteInit(mySprite, 0, 0, 256, 256, "http://i.imgur.com/1zAqAlr.png", true);
-			spriteInit(metSprite, canvas.width/2, canvas.height/2, 256, 256, "http://i.imgur.com/Yo95hzI.png", true)
+			spriteInit(metSprite, canvas.width/2, canvas.height/2, 256, 256, "http://i.imgur.com/Yo95hzI.png", true);
 			
 			//Add the sprite to the world
 			this.stage.addChild(metSprite);
@@ -185,6 +186,7 @@ gameScreen.init = function(){
 			//Define some variables to hold the sprite's x and y velocities
 			var xvel = 1;
 			var yvel = 1;
+			
 			mySprite.update = function(d){
 				//Define a speed to move at
 				var speed = 2;
@@ -282,12 +284,19 @@ gInput.addFunc(27, function(){
 });
 
 function spriteInit(sprite, x, y, width, height, texture, center){
+	
+	//set x and y for sprite
 	sprite.x = x;
 	sprite.y = y;
+	
+	//set width and height for sprite
 	sprite.width = width;
 	sprite.height = height;
+	
+	//texture for sprite
 	sprite.image = Textures.load(texture);
 	
+	//center sprite if true
 	if(center){
 		sprite.xoffset = -sprite.width/2;
 		sprite.yoffset = -sprite.height/2;
