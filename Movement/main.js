@@ -4,35 +4,34 @@ use2D = true;
 
 //Create a screen class
 function Screen(alwaysUpdate, alwaysDraw) {
-    //Call the Sprite constructor to copy any object properties
+    //Copy object properties
     Sprite.call(this);
     
-    //These determine if the screen should be update/drawn when it is not the top screen
+    //Determine if the screen should be updated/drawn when not top screen
     this.alwaysUpdate = alwaysUpdate;
     this.alwaysDraw = alwaysDraw;
     
     //Has the screen been initialized
     this.initialized = false;
     
-    //Create a stage for the screen that we can add sprites to
+    //Stage to add sprites to
     this.stage = new Sprite();
     this.addChild(this.stage);
     
-    //Create a gui object which extends sprite and supports buttons
+    //Gui object extends sprite and supports buttons
     this.gui = new GUI(gInput);
     this.addChild(this.gui);
 }
-//Inherit all Sprite properties
+//Inherit Sprite properties
 Screen.prototype = new Sprite();
 
-//Called once to set up anything that needs to be called after the game is initialized
-//some values aren't available before initGame such as any canvas property
+//Set up anything that needs to be called after the game is initialized
 Screen.prototype.init = function(){
 }
 
 //Create a screen manager class
 function ScreenManager() {
-    //Call the Sprite constructor to copy any object properties
+    //Copy any object properties
     Sprite.call(this);
 
     this.screens = new List();
@@ -62,7 +61,7 @@ ScreenManager.prototype.remove = function(screen){
 ScreenManager.prototype.update = function (d) {
     var screens = this.screens;
     
-    //Loop through the screens and update if they are supposed to always update or if they ar the top screen
+    //Loop through the screens and update if they are supposed to always update or if they are the top screen
     for (var node = screens.head; node != null; node = node.link) {
         var screen = node.item;
         
@@ -97,36 +96,35 @@ ScreenManager.prototype.draw = function (ctx) {
 
 //Create a new screen manager
 var screenMan = new ScreenManager();
-//Add it as a child of the world.
-//Here we're taking advantage of the sprite hierarchy structure
+//Add to the world
 world.addChild(screenMan);
 
 //Create a main menu screen
 var mainMenu = new Screen(false, false);
-//Optionally set a background for the screen
+//Main menu background
 mainMenu.image = Textures.load("http://www.jar42.com/brine/lab1/images/samson.png");
 screenMan.push(mainMenu);
 
-//Override the empty init function to set some properties
+//Set properties in empty init function
 mainMenu.init = function(){
-    //Since we set a background we want the screen to fill  the canvas
+    //Set screen to fill canvas
     this.width = canvas.width;
     this.height = canvas.height;
     
     this.gui.x = canvas.width/2;
     this.gui.y = canvas.height/2;
     
-    //Add some sprites to the main menu
-    var logo = new Sprite();
-    logo.x = canvas.width/2;
-    logo.y = canvas.height/2;
-    logo.xoffset = -logo.width/2;
-    logo.yoffset = -logo.height/2;
-    logo.image = Textures.load("http://www.jar42.com/brine/lab1/images/crichton.jpg");
-    logo.update = function(d){
-        logo.rotation += 0.01;
+    //Main menu sprites
+    var mmSprite = new Sprite();
+    mmSprite.x = canvas.width/2;
+    mmSprite.y = canvas.height/2;
+    mmSprite.xoffset = -mmSprite.width/2;
+    mmSprite.yoffset = -mmSprite.height/2;
+    mmSprite.image = Textures.load("http://www.jar42.com/brine/lab1/images/crichton.jpg");
+    mmSprite.update = function(d){
+        mmSprite.rotation += 0.01;
     }
-    mainMenu.stage.addChild(logo);
+    mainMenu.stage.addChild(mmSprite);
     
     var newGame = new TextButton("New Game");
     newGame.center = true;
@@ -151,113 +149,96 @@ mainMenu.init = function(){
 var gameScreen = new Screen(false, true);
 gameScreen.image = Textures.load("http://www.jar42.com/brine/laststop/images/grass.png");
 
-//Override the empty init function to set some properties
+//Set init properties
 gameScreen.init = function(){
-    //Since we set a background we want the screen to fill  the canvas
+    //Fill the canvas
     this.width = canvas.width;
     this.height = canvas.height;
     
     //Create a new Sprite
-			var mySprite = new Sprite();
+		var mySprite = new Sprite();
+		
+		//Set its dimensions
+		mySprite.width = 256;
+		mySprite.height = 256;
+		
+		//Make the origin the center of the sprite
+		mySprite.xoffset = -mySprite.width/2;
+		mySprite.yoffset = -mySprite.height/2;
+		
+		//Set the sprite's image
+		mySprite.image = Textures.load("http://www.jar42.com/brine/lab1/images/carter.jpg");
+		
+		this.stage.addChild(mySprite);
+		
+		//A
+		gInput.addBool(65, "left");
+		//D
+		gInput.addBool(68, "right");
+		//S
+		gInput.addBool(83, "down");
+		//W
+		gInput.addBool(87, "up");
+		//Left
+		gInput.addBool(37, "rotL");
+		//Right
+		gInput.addBool(39, "rotR");
+		
+		//Sprite's x and y velocities
+		var xvel = 1;
+		var yvel = 1;
+		mySprite.update = function(d){
+			//Move speed
+			var speed = 2;
 			
-			//Set its dimensions
-			mySprite.width = 256;
-			mySprite.height = 256;
-			
-			//Shift the sprite so that its origin is at its center
-			//The offset is negative because we are moving the sprite relative to its origin and not the origin relative to the sprite
-			mySprite.xoffset = -mySprite.width/2;
-			mySprite.yoffset = -mySprite.height/2;
-			
-			//Set the sprite's texture
-			mySprite.image = Textures.load("http://www.jar42.com/brine/lab1/images/carter.jpg");
-			
-			//Add the sprite to the world
-			this.stage.addChild(mySprite);
-			
-			//A
-			gInput.addBool(65, "left");
-			//D
-			gInput.addBool(68, "right");
-			//S
-			gInput.addBool(83, "down");
-			//W
-			gInput.addBool(87, "up");
-			//Q
-			gInput.addBool(37, "rotL");
-			//E
-			gInput.addBool(39, "rotR");
-			
-			//Override the default update function
-			//Define some variables to hold the sprite's x and y velocities
-			var xvel = 1;
-			var yvel = 1;
-			mySprite.update = function(d){
-				//Define a speed to move at
-				var speed = 2;
-				
-				//If the A key is pressed move to the left
-				if(gInput.left){
-					this.x -= speed;
-				}
-				
-				//If the D key is pressed move to the right
-				if(gInput.right){
-					this.x += speed;
-				}
-				
-				//If the S key is pressed move down
-				if(gInput.down){
-					//Note that an increasing y means moving down the screen
-					this.y += speed;
-				}
-				
-				//If the W key is pressed move up
-				if(gInput.up){
-					this.y -= speed;
-				}
-				
-				if(gInput.rotL){
-					this.rotation -= 0.1;
-				}
-				
-				if(gInput.rotR){
-					this.rotation += 0.1;
-				}
-				
-				//Make the sprite warp to the opposite side of the canvas when it goes off a side
-				//If it goes off the left or right edge
-				if(this.x < 0){
-					this.x = canvas.width; //Place it on the right side
-				}else if(this.x > canvas.width){
-					this.x = 0; //Place it on the left side
-				}
-				
-				//If it goes off the top or bottom edge
-				if(this.y < 0){
-					this.y = canvas.height; //Place it at the bottom
-				}if(this.y > canvas.height){
-					this.y = 0; //Place it at the top
-				}
-				
-				//Find the horizontal distance between the sprite and the mouse
-				var xDis = gInput.mouse.x-this.x;
-				
-				//Find the vertical distance between the sprite and the mouse
-				var yDis = gInput.mouse.y-this.y;
-				
-				//Use those distances and the arctangent to calculate the angle from the sprite to the mouse
-				//var angle = Math.atan2(yDis, xDis);
-				
-				//Set the sprite's rotation to the calculated angle
-				//this.rotation = angle;
+			//If the A key is pressed move to the left
+			if(gInput.left){
+				this.x -= speed;
 			}
+			
+			//If the D key is pressed move to the right
+			if(gInput.right){
+				this.x += speed;
+			}
+			
+			//If the S key is pressed move down
+			if(gInput.down){
+				this.y += speed;
+			}
+			
+			//If the W key is pressed move up
+			if(gInput.up){
+				this.y -= speed;
+			}
+			
+			if(gInput.rotL){
+				this.rotation -= 0.1;
+			}
+			
+			if(gInput.rotR){
+				this.rotation += 0.1;
+			}
+			
+			//Sprite stops at the edge of the screen
+			if(this.x < 0){
+				this.x = canvas.width; 
+			}else if(this.x > canvas.width){
+				this.x = 0;
+			}
+			
+			if(this.y < 0){
+				this.y = canvas.height;
+			}if(this.y > canvas.height){
+				this.y = 0;
+			}
+			
+		}
 }
 
 var pauseMenu = new Screen(false, true);
-//Override the empty init function to set some properties
+//Set init properties
 pauseMenu.init = function(){
-    //Since we set a background we want the screen to fill  the canvas
+    //Fill the canvas
     this.width = canvas.width;
     this.height = canvas.height;
     
