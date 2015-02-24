@@ -1,37 +1,36 @@
 uclearColor = [0, 0, 0, 0];
 use2D = true;
-//initGame("canvas");
 
-//Create a screen class
+//Screen class
 function Screen(alwaysUpdate, alwaysDraw) {
-    //Copy object properties
+    //Copy properties
     Sprite.call(this);
     
-    //Determine if the screen should be updated/drawn when not top screen
+    //Determine update/draw calls
     this.alwaysUpdate = alwaysUpdate;
     this.alwaysDraw = alwaysDraw;
     
-    //Has the screen been initialized
+    //Initialized?
     this.initialized = false;
     
-    //Stage to add sprites to
+    //Create a stage for sprites
     this.stage = new Sprite();
     this.addChild(this.stage);
     
-    //Gui object extends sprite and supports buttons
+    //Create a gui object
     this.gui = new GUI(gInput);
     this.addChild(this.gui);
 }
 //Inherit Sprite properties
 Screen.prototype = new Sprite();
 
-//Set up anything that needs to be called after the game is initialized
+//Call for setup
 Screen.prototype.init = function(){
 }
 
 //Create a screen manager class
 function ScreenManager() {
-    //Copy any object properties
+    //Copy properties
     Sprite.call(this);
 
     this.screens = new List();
@@ -57,7 +56,7 @@ ScreenManager.prototype.remove = function(screen){
     this.screens.remove(screen);
 }
 
-//Override th defult update function
+//Override the defult update function
 ScreenManager.prototype.update = function (d) {
     var screens = this.screens;
     
@@ -65,7 +64,7 @@ ScreenManager.prototype.update = function (d) {
     for (var node = screens.head; node != null; node = node.link) {
         var screen = node.item;
         
-        //The gui wasn't exactly made for this situation so we need to hide it if it's not in the current screen
+        //Hide gui
         if(node != screens.tail){
             screen.gui.visible = false;
         }else{
@@ -82,7 +81,7 @@ ScreenManager.prototype.update = function (d) {
     }
 }
 
-//Override the defualt draw function the same as the update function except we're drawing
+//Override the defualt draw function
 ScreenManager.prototype.draw = function (ctx) {
     var screens = this.screens;
     
@@ -96,18 +95,18 @@ ScreenManager.prototype.draw = function (ctx) {
 
 //Create a new screen manager
 var screenMan = new ScreenManager();
-//Add to the world
+//Add it as a child
 world.addChild(screenMan);
 
 //Create a main menu screen
 var mainMenu = new Screen(false, false);
-//Main menu background
+//Optionally set a background for the screen
 mainMenu.image = Textures.load("http://www.jar42.com/brine/lab1/images/samson.png");
 screenMan.push(mainMenu);
 
-//Set properties in empty init function
+//Set init properties
 mainMenu.init = function(){
-    //Set screen to fill canvas
+    //Bg fills canvas
     this.width = canvas.width;
     this.height = canvas.height;
     
@@ -144,14 +143,16 @@ mainMenu.init = function(){
     resumeGame.label.fontSize = 30;
     resumeGame.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
     this.gui.addChild(resumeGame);
+    
+    
 }
 
 var gameScreen = new Screen(false, true);
-gameScreen.image = Textures.load("http://www.jar42.com/brine/laststop/images/grass.png");
+gameScreen.image = Textures.load("http://www.jar42.com/brine/lab1/images/chiana.jpg");
 
 //Set init properties
 gameScreen.init = function(){
-    //Fill the canvas
+    //Bg fill canvas
     this.width = canvas.width;
     this.height = canvas.height;
     
@@ -159,16 +160,17 @@ gameScreen.init = function(){
 		var mySprite = new Sprite();
 		
 		//Set its dimensions
-		mySprite.width = 256;
-		mySprite.height = 256;
+		mySprite.width = 150;
+		mySprite.height = 30;
 		
-		//Make the origin the center of the sprite
+		//Shift the sprite so that its origin is at its center
 		mySprite.xoffset = -mySprite.width/2;
 		mySprite.yoffset = -mySprite.height/2;
 		
-		//Set the sprite's image
+		//Set the sprite's texture
 		mySprite.image = Textures.load("http://www.jar42.com/brine/lab1/images/carter.jpg");
 		
+		//Add the sprite to the world
 		this.stage.addChild(mySprite);
 		
 		//A
@@ -179,16 +181,20 @@ gameScreen.init = function(){
 		gInput.addBool(83, "down");
 		//W
 		gInput.addBool(87, "up");
-		//Left
+		//Left Arrow
 		gInput.addBool(37, "rotL");
-		//Right
+		//Right Arrow
 		gInput.addBool(39, "rotR");
+		//Up Arrow
+		gInput.addBool(38, "shoot");
+		//Down Arrow
+		gInput.addBool(40, "slow");
 		
-		//Sprite's x and y velocities
+		//The sprite's x and y velocities
 		var xvel = 1;
 		var yvel = 1;
 		mySprite.update = function(d){
-			//Move speed
+			//Define a speed
 			var speed = 2;
 			
 			//If the A key is pressed move to the left
@@ -212,33 +218,65 @@ gameScreen.init = function(){
 			}
 			
 			if(gInput.rotL){
-				this.rotation -= 0.1;
+				this.rotation -= 0.08;
 			}
 			
 			if(gInput.rotR){
-				this.rotation += 0.1;
+				this.rotation += 0.08;
 			}
 			
-			//Sprite stops at the edge of the screen
+			//Sprite stops at edge of screen
 			if(this.x < 0){
-				this.x = canvas.width; 
-			}else if(this.x > canvas.width){
 				this.x = 0;
+			}else if(this.x > canvas.width){
+				this.x = canvas.width;
 			}
 			
 			if(this.y < 0){
-				this.y = canvas.height;
-			}if(this.y > canvas.height){
 				this.y = 0;
+			}if(this.y > canvas.height){
+				this.y = canvas.height;
 			}
 			
+		}
+		
+		document.onkeydown = checkKey;
+			
+		 	//canvas.onmousedown = function(e){
+	 	function checkKey(e){
+	 		e = e || window.event;
+	 		if(e.keyCode == '38'){ //Up Arrow
+	 			console.log("Up");
+				var probe = new Sprite();
+					probe.width = 25;
+					probe.height = 25;
+					probe.x = mySprite.x;
+					probe.y = mySprite.y;
+					probe.xoffset = -probe.width/2;
+					probe.yoffset = -probe.height/2;
+					probe.image = Textures.load("http://www.jar42.com/brine/lab1/images/carter.jpg");
+					//console.log("CREATED0");
+				//If the Up arrow is pressed, shoot probe
+				gameScreen.stage.addChild(probe);
+				//console.log("CREATED1");
+				var proSpeed = -3;
+				//console.log("CREATED2");
+					probe.update = function(d){
+					console.log("UPDATING");
+					this.y += proSpeed;
+					if(gInput.slow){
+						probe.y += 0;
+						console.log("SLOWING");
+					}
+				}
+			}
 		}
 }
 
 var pauseMenu = new Screen(false, true);
 //Set init properties
 pauseMenu.init = function(){
-    //Fill the canvas
+    //Bg fills canvas
     this.width = canvas.width;
     this.height = canvas.height;
     
@@ -266,6 +304,14 @@ pauseMenu.init = function(){
         screenMan.remove(pauseMenu);
         screenMan.remove(gameScreen);
     }
+    
+    var restartGame = new TextButton("Restart Game");
+    restartGame.y = 100;
+    restartGame.center = true;
+    restartGame.label.dropShadow = true;
+    restartGame.label.fontSize = 30;
+    restartGame.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
+    this.gui.addChild(restartGame);
 }
 
 gInput.addFunc(27, function(){
