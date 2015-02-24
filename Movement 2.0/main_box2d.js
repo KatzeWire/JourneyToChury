@@ -162,28 +162,7 @@ gameScreen.init = function(){
 			var metSprite = new Sprite();
 			
 			spriteInit(mySprite, 0, 0, 256, 256, "http://i.imgur.com/1zAqAlr.png", true);
-			
-			//Set dimensions
-			//mySprite.width = 256;
-			//mySprite.height = 256;
-			metSprite.width = 256;
-			metSprite.height = 256;
-
-			//Shift the sprite so that its origin is at its center
-			//The offset is negative because we are moving the sprite relative to its origin and not the origin relative to the sprite
-			//mySprite.xoffset = -mySprite.width/2;
-			//mySprite.yoffset = -mySprite.height/2;
-			metSprite.xoffset = -metSprite.width/2;
-			metSprite.yoffset = -metSprite.height/2;
-			
-			//Set the sprite's texture
-			//mySprite.image = Textures.load("http://i.imgur.com/1zAqAlr.png");
-			metSprite.image = Textures.load("http://i.imgur.com/Yo95hzI.png");
-			
-			//x and y start for meteor sprites
-			metSprite.x = canvas.width/2;
-			metSprite.y = canvas.height/2;
-
+			spriteInit(metSprite, canvas.width/2, canvas.height/2, 256, 256, "http://i.imgur.com/Yo95hzI.png", true)
 			
 			//Add the sprite to the world
 			this.stage.addChild(metSprite);
@@ -307,7 +286,7 @@ function spriteInit(sprite, x, y, width, height, texture, center){
 	sprite.y = y;
 	sprite.width = width;
 	sprite.height = height;
-	sprite.image = textures.load(texture);
+	sprite.image = Textures.load(texture);
 	
 	if(center){
 		sprite.xoffset = -sprite.width/2;
