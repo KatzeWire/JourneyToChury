@@ -188,6 +188,9 @@ gameScreen.init = function(){
 			var yvel = 1;
 			
 			mySprite.update = function(d){
+				
+				getMousePosition();
+				
 				//Define a speed to move at
 				var speed = 2;
 				
@@ -303,3 +306,17 @@ function spriteInit(sprite, x, y, width, height, texture, center){
 	}
 	
 }
+
+//creates polygonal shape for collision
+function createPoly(world, x, y, points, fixed) {
+	var polySd = new b2PolyDef();
+	if (!fixed) polySd.density = 1.0;
+	polySd.vertexCount = points.length;
+	for (var i = 0; i < points.length; i++) {
+		polySd.vertices[i].Set(points[i][0], points[i][1]);
+	}
+	var polyBd = new b2BodyDef();
+	polyBd.AddShape(polySd);
+	polyBd.position.Set(x,y);
+	return world.CreateBody(polyBd)
+};
