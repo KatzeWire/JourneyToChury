@@ -153,6 +153,17 @@ gameScreen.image = Textures.load("http://i.imgur.com/5BOdpGT.png");
 
 //Override the empty init function to set some properties
 gameScreen.init = function(){
+	
+	var circleSd = new b2CircleDef();
+	circleSd.density = 1.0;
+	circleSd.radius = 20;
+	circleSd.restitution = 1.0;
+	circleSd.friction = 0;
+	var circleBd = new b2BodyDef();
+	circleBd.AddShape(circleSd);
+	circleBd.position.Set(20,20);
+	var circleBody = this.stage.addChild(circleBd);
+	
     //Since we set a background we want the screen to fill  the canvas
     this.width = canvas.width;
     this.height = canvas.height;
@@ -160,6 +171,9 @@ gameScreen.init = function(){
     //Create new Sprites
 			var mySprite = new Sprite();
 			var metSprite = new Sprite();
+			
+			var shape = createPoly(15, 15, [[0, 0], [30, 30], [-30, 30]], true);
+			this.stage.addChild(shape);
 			
 			//set dimensions for sprite and upload textures
 			spriteInit(mySprite, 0, 0, 256, 256, "http://i.imgur.com/1zAqAlr.png", true);
@@ -188,8 +202,6 @@ gameScreen.init = function(){
 			var yvel = 1;
 			
 			mySprite.update = function(d){
-				
-				getMousePosition();
 				
 				//Define a speed to move at
 				var speed = 2;
@@ -308,7 +320,7 @@ function spriteInit(sprite, x, y, width, height, texture, center){
 }
 
 //creates polygonal shape for collision
-function createPoly(world, x, y, points, fixed) {
+function createPoly(x, y, points, fixed) {
 	var polySd = new b2PolyDef();
 	if (!fixed) polySd.density = 1.0;
 	polySd.vertexCount = points.length;
@@ -318,5 +330,5 @@ function createPoly(world, x, y, points, fixed) {
 	var polyBd = new b2BodyDef();
 	polyBd.AddShape(polySd);
 	polyBd.position.Set(x,y);
-	return world.CreateBody(polyBd)
+	return polyBd;
 };
