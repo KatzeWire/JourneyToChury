@@ -154,14 +154,15 @@ gameScreen.image = Textures.load("http://i.imgur.com/5BOdpGT.png");
 //Override the empty init function to set some properties
 gameScreen.init = function(){
 	
+	//test creation of a circle body --- currently not working
 	var circleSd = new b2CircleDef();
 	circleSd.density = 1.0;
-	circleSd.radius = 20;
+	circleSd.radius = 100;
 	circleSd.restitution = 1.0;
 	circleSd.friction = 0;
 	var circleBd = new b2BodyDef();
 	circleBd.AddShape(circleSd);
-	circleBd.position.Set(20,20);
+	circleBd.position.Set(100,100);
 	var circleBody = this.stage.addChild(circleBd);
 	
     //Since we set a background we want the screen to fill  the canvas
@@ -180,7 +181,7 @@ gameScreen.init = function(){
 			spriteInit(metSprite, canvas.width/2, canvas.height/2, 256, 256, "http://i.imgur.com/Yo95hzI.png", true);
 			
 			//Add the sprite to the world
-			this.stage.addChild(metSprite);
+			//this.stage.addChild(metSprite);
 			this.stage.addChild(mySprite);
 			
 			//A
@@ -320,6 +321,7 @@ function spriteInit(sprite, x, y, width, height, texture, center){
 }
 
 //creates polygonal shape for collision
+//points uses array to determine vertices
 function createPoly(x, y, points, fixed) {
 	var polySd = new b2PolyDef();
 	if (!fixed) polySd.density = 1.0;
