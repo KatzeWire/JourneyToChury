@@ -168,7 +168,7 @@ gameScreen.init = function(){
 		mySprite.yoffset = -mySprite.height/2;
 		
 		//Set the sprite's texture
-		mySprite.image = Textures.load("http://www.jar42.com/brine/lab1/images/carter.jpg");
+		mySprite.image = Textures.load("https://dl-web.dropbox.com/get/CMPM20/Journey%20to%20Churry/satellite.png?_subject_uid=125848779&w=AAA5HjxUHENb_McLF0I_52E6obdD4oG-972EPlDcUYQUbA");
 		
 		//Add the sprite to the world
 		this.stage.addChild(mySprite);
@@ -241,8 +241,8 @@ gameScreen.init = function(){
 		}
 		
 		document.onkeydown = checkKey;
-			
-		 	//canvas.onmousedown = function(e){
+		var probeCounter = 0;	
+		//canvas.onmousedown = function(e){
 	 	function checkKey(e){
 	 		e = e || window.event;
 	 		if(e.keyCode == '38'){ //Up Arrow
@@ -254,10 +254,13 @@ gameScreen.init = function(){
 					probe.y = mySprite.y;
 					probe.xoffset = -probe.width/2;
 					probe.yoffset = -probe.height/2;
-					probe.image = Textures.load("http://www.jar42.com/brine/lab1/images/carter.jpg");
-					//console.log("CREATED0");
+				probe.image = Textures.load("https://dl-web.dropbox.com/get/CMPM20/Journey%20to%20Churry/Probe.png?_subject_uid=125848779&w=AAB_Lhn-MGvP1e0ktbXPwyG-0MuFiVWAwMKUCrv9v9K9tw");
+				//console.log("CREATED0");
 				//If the Up arrow is pressed, shoot probe
-				gameScreen.stage.addChild(probe);
+				if(probeCounter == 0){
+					gameScreen.stage.addChild(probe);
+					probeCounter += 1;
+				}
 				//console.log("CREATED1");
 				var proSpeed = -3;
 				//console.log("CREATED2");
