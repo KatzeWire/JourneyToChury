@@ -173,6 +173,7 @@ gameScreen.init = function(){
 			var mySprite = new Sprite();
 			var metSprite = new Sprite();
 			
+			//implementation of createPoly -- not sure if broken
 			var shape = createPoly(15, 15, [[0, 0], [30, 30], [-30, 30]], true);
 			this.stage.addChild(shape);
 			
