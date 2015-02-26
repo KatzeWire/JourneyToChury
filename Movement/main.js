@@ -166,6 +166,8 @@ gameScreen.init = function(){
 		//Shift the sprite so that its origin is at its center
 		mySprite.xoffset = -mySprite.width/2;
 		mySprite.yoffset = -mySprite.height/2;
+		mySprite.x = canvas.width/2;
+		mySprite.y = canvas.height - 75;
 		
 		//Set the sprite's texture
 		mySprite.image = Textures.load("https://dl-web.dropbox.com/get/CMPM20/Journey%20to%20Churry/satellite.png?_subject_uid=125848779&w=AAA5HjxUHENb_McLF0I_52E6obdD4oG-972EPlDcUYQUbA");
@@ -248,8 +250,8 @@ gameScreen.init = function(){
 	 		if(e.keyCode == '38'){ //Up Arrow
 	 			console.log("Up");
 				var probe = new Sprite();
-					probe.width = 25;
-					probe.height = 25;
+					probe.width = 50;
+					probe.height = 26;
 					probe.x = mySprite.x;
 					probe.y = mySprite.y;
 					probe.xoffset = -probe.width/2;
@@ -262,13 +264,13 @@ gameScreen.init = function(){
 					probeCounter += 1;
 				}
 				//console.log("CREATED1");
-				var proSpeed = -3;
+				var proSpeed = 4;
 				//console.log("CREATED2");
-					probe.update = function(d){
+				probe.update = function(d){
 					console.log("UPDATING");
-					this.y += proSpeed;
+					this.y -= proSpeed;
 					if(gInput.slow){
-						probe.y += 0;
+						probe.y += 2;
 						console.log("SLOWING");
 					}
 				}
@@ -321,4 +323,6 @@ gInput.addFunc(27, function(){
     if(screenMan.screens.find(gameScreen) && !screenMan.screens.find(pauseMenu)){
         screenMan.push(pauseMenu);
     }
-});
+}
+
+);
