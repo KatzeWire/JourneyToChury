@@ -242,6 +242,11 @@ gameScreen.init = function(){
 			
 		}
 		
+		/*document.onkeydown = checkKey;
+		var probeCounter = 0;
+		checkKey(e.keyCode == '38');*/
+		//shooting();
+		
 		document.onkeydown = checkKey;
 		var probeCounter = 0;	
 		//canvas.onmousedown = function(e){
@@ -324,5 +329,42 @@ gInput.addFunc(27, function(){
         screenMan.push(pauseMenu);
     }
 }
+
+/*function shooting(checkKey){
+	document.onkeydown = checkKey;
+	var probeCounter = 0;
+	//canvas.onmousedown = function(e){
+	function checkKey(e){
+		e = e || window.event;
+	 	if(e.keyCode == '38'){ //Up Arrow
+	 		console.log("Up");
+			var probe = new Sprite();
+				probe.width = 50;
+				probe.height = 26;
+				probe.x = mySprite.x;
+				probe.y = mySprite.y;
+				probe.xoffset = -probe.width/2;
+				probe.yoffset = -probe.height/2;
+				probe.image = Textures.load("https://dl.dropboxusercontent.com/s/yg9d8rdfs4bmggj/Probe.png?dl=0");
+			//console.log("CREATED0");
+			//If the Up arrow is pressed, shoot probe
+			if(probeCounter == 0){
+				gameScreen.stage.addChild(probe);
+				probeCounter += 1;
+			}
+			//console.log("CREATED1");
+			var proSpeed = 4;
+			//console.log("CREATED2");
+			probe.update = function(d){
+				console.log("UPDATING");
+				this.y -= proSpeed;
+				if(gInput.slow){
+					probe.y += 2;
+					console.log("SLOWING");
+				}
+			}
+		}
+	}
+}*/
 
 );
