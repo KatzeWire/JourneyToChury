@@ -170,7 +170,7 @@ gameScreen.init = function(){
 		mySprite.y = canvas.height - 75;
 		
 		//Set the sprite's texture
-		mySprite.image = Textures.load("https://dl-web.dropbox.com/get/CMPM20/Journey%20to%20Churry/satellite.png?_subject_uid=125848779&w=AAA5HjxUHENb_McLF0I_52E6obdD4oG-972EPlDcUYQUbA");
+		mySprite.image = Textures.load("https://dl.dropboxusercontent.com/s/x2zbgfies4zxl18/satellite.png?dl=0");
 		
 		//Add the sprite to the world
 		this.stage.addChild(mySprite);
@@ -256,7 +256,7 @@ gameScreen.init = function(){
 					probe.y = mySprite.y;
 					probe.xoffset = -probe.width/2;
 					probe.yoffset = -probe.height/2;
-				probe.image = Textures.load("https://dl-web.dropbox.com/get/CMPM20/Journey%20to%20Churry/Probe.png?_subject_uid=125848779&w=AAB_Lhn-MGvP1e0ktbXPwyG-0MuFiVWAwMKUCrv9v9K9tw");
+				probe.image = Textures.load("https://dl.dropboxusercontent.com/s/yg9d8rdfs4bmggj/Probe.png?dl=0");
 				//console.log("CREATED0");
 				//If the Up arrow is pressed, shoot probe
 				if(probeCounter == 0){
