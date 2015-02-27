@@ -67,17 +67,30 @@ java.lang.NullPointerException
 	at com.aptana.usage.internal.DefaultAnalyticsEventHandler.sendEventSync(DefaultAnalyticsEventHandler.java:224)
 	at com.aptana.usage.internal.DefaultAnalyticsEventHandler$1.run(DefaultAnalyticsEventHandler.java:75)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+<<<<<<< HEAD
 !SESSION 2015-02-26 21:49:58.228 -----------------------------------------------
 eclipse.buildId=unknown
 java.version=1.7.0_67
+=======
+!SESSION 2015-02-27 09:24:13.059 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_25
+>>>>>>> origin/master
 java.vendor=Oracle Corporation
 BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
 Command-line arguments:  -os win32 -ws win32 -arch x86
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.e4.ui.workbench 4 0 2015-02-26 21:57:20.469
 !MESSAGE Unable to load resource file:/C:/Users/brand_000/Documents/CM20/GROUP%20PROJECT/GROUP-PROJECT/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 !STACK 0
 org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/brand_000/Documents/CM20/GROUP%20PROJECT/GROUP-PROJECT/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/brand_000/Documents/CM20/GROUP%20PROJECT/GROUP-PROJECT/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; The markup in the document preceding the root element must be well-formed.
+=======
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2015-02-27 09:24:14.451
+!MESSAGE Unable to load resource file:/C:/Users/Theoren/Documents/GitHub/GROUP-PROJECT/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+!STACK 0
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/Theoren/Documents/GitHub/GROUP-PROJECT/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/Theoren/Documents/GitHub/GROUP-PROJECT/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; The markup in the document preceding the root element must be well-formed.
+>>>>>>> origin/master
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.handleDemandLoadException(ResourceSetImpl.java:319)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:278)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.getResource(ResourceSetImpl.java:406)
@@ -103,7 +116,11 @@ org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException:
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:636)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1450)
+<<<<<<< HEAD
 Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/brand_000/Documents/CM20/GROUP%20PROJECT/GROUP-PROJECT/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/brand_000/Documents/CM20/GROUP%20PROJECT/GROUP-PROJECT/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; The markup in the document preceding the root element must be well-formed.
+=======
+Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/Theoren/Documents/GitHub/GROUP-PROJECT/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/Theoren/Documents/GitHub/GROUP-PROJECT/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; The markup in the document preceding the root element must be well-formed.
+>>>>>>> origin/master
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(Unknown Source)
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(Unknown Source)
 	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(Unknown Source)
@@ -126,6 +143,7 @@ Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/brand_000/Docum
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoad(ResourceSetImpl.java:259)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:274)
 	... 23 more
+<<<<<<< HEAD
 
 !ENTRY org.eclipse.ui 4 0 2015-02-26 22:07:23.995
 !MESSAGE Unhandled event loop exception
@@ -136,3 +154,5 @@ org.jruby.exceptions.RaiseException: (Errno::EINVAL) =::
 !ENTRY com.aptana.php.debug.epl 4 150 2015-02-26 23:49:31.844
 !MESSAGE Incompatible debugger version.
 The remote debugger version might not match the expected protocol version (2006040705).
+=======
+>>>>>>> origin/master
