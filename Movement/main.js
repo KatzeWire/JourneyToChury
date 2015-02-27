@@ -212,6 +212,7 @@ gameScreen.init = function() {
 	mySprite.yoffset = -mySprite.height / 2;
 	mySprite.x = canvas.width / 2;
 	mySprite.y = canvas.height - 75;
+	mySprite.radius = 75;
 
 	//Set the sprite's texture
 	mySprite.image = Textures.load("https://dl.dropboxusercontent.com/s/x2zbgfies4zxl18/satellite.png?dl=0");
@@ -245,23 +246,36 @@ gameScreen.init = function() {
 		var speed = 2;
 
 		//If the A key is pressed move to the left
-		if (gInput.left) {
+		if (gInput.left && this.x > 0) {
 			this.x -= speed;
+			ax -= speed;
+			bx -= speed;
+			cx -= speed;
+			dx -= speed;
 		}
-
 		//If the D key is pressed move to the right
-		if (gInput.right) {
+		if (gInput.right && this.x < canvas.width) {
 			this.x += speed;
+			ax += speed;
+			bx += speed;
+			cx += speed;
+			dx += speed;
 		}
-
 		//If the S key is pressed move down
-		if (gInput.down) {
+		if (gInput.down && this.y < canvas.height) {
 			this.y += speed;
+			ay += speed;
+			by += speed;
+			cy += speed;
+			dy += speed;
 		}
-
 		//If the W key is pressed move up
-		if (gInput.up) {
+		if (gInput.up && this.y > 0) {
 			this.y -= speed;
+			ay -= speed;
+			by -= speed;
+			cy -= speed;
+			dy -= speed;
 		}
 
 		if (gInput.rotL) {
@@ -272,21 +286,36 @@ gameScreen.init = function() {
 			this.rotation += 0.08;
 		}
 
-		//Sprite stops at edge of screen
-		if (this.x < 0) {
-			this.x = 0;
-		} else if (this.x > canvas.width) {
-			this.x = canvas.width;
-		}
-
-		if (this.y < 0) {
-			this.y = 0;
-		}
-		if (this.y > canvas.height) {
-			this.y = canvas.height;
-		}
-
 	}
+	
+	//Keep track of corners
+	var ax = (canvas.width/2)-75, ay = canvas.height-75-25;
+	var bx = (canvas.width/2)+75, by = canvas.height-75-25;
+	var cx = (canvas.width/2)-75, cy = canvas.height-75+25;
+	var dx = (canvas.width/2)+75, dy = canvas.height-75+25;
+	
+	function rotTracker(centerX, centerY, pointX, pointY, angle){
+			var x = Math.round((Math.cos(angle) * (pointX - centerX)) - (Math.sin(angle) * (pointY - centerY)) + centerX);
+			var y = Math.round((Math.sin(angle) * (pointX - centerX)) - (Math.cos(angle) * (pointY - centerY)) + centerY);
+			return {"x":x, "y":y};
+			//console.log("rot"+x);
+		}
+		
+		var resultTL = rotTracker(mySprite.x, mySprite.y, ax, ay, mySprite.rotation);
+		ax = resultTL.x;
+		ay = resultTL.y;
+		
+		var resultTR = rotTracker(mySprite.x, mySprite.y, bx, by, mySprite.rotation);
+		bx = resultTR.x;
+		by = resultTL.y;
+		
+		var resultBL = rotTracker(mySprite.x, mySprite.y, cx, cy, mySprite.rotation);
+		cx = resultBL.x;
+		cy = resultBL.y;
+		
+		var resultBR = rotTracker(mySprite.x, mySprite.y, dx, dy, mySprite.rotation);
+		dx = resultBR.x;
+		dy = resultBR.y;
 	
 	
 	//initializing asteroid wave
@@ -294,9 +323,17 @@ gameScreen.init = function() {
         //var newPart = new Particle(canvas.width*Math.random(), 0, 30);
         var newPart = new Particle(canvas.width*Math.random(), 0, 20+25*Math.random());
         newPart.rotSpeed = -maxRot+(2*maxRot)*Math.random();
-        
+        newPart.radius = 15;
         parts.push(newPart);
         world.addChild(newPart); 
+    }
+    
+    function cirCol(c1, c2) {
+    	var cirX = c1.x - c2.x;
+    	var cirY = c1.y - c2.y;
+    	var dist = c1.radius + c2.radius;
+    	
+    	return (cirX * cirX + cirY * cirY <= dist * dist);
     }
 	
 	/*parts.update = function(){
