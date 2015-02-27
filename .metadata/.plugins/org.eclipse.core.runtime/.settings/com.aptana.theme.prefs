@@ -1,11 +1,10 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=origin/master
 ACTIVE_HYPERLINK_COLOR=13,17,113
 ACTIVE_THEME=Light Studio
 HYPERLINK_COLOR=13,17,113
-<<<<<<< HEAD
-THEME_CHANGED=1425016663078
-=======
-THEME_CHANGED=1425057856971
->>>>>>> origin/master
+THEME_CHANGED=1425080473638
 eclipse.preferences.version=1
 hyperlinkColor=13,17,113
 hyperlinkColor.SystemDefault=false
