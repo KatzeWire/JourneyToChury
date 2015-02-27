@@ -110,8 +110,8 @@ function Particle(x, y, size){
     this.image = Textures.load("https://dl.dropboxusercontent.com/s/0hk1d3tngi90yqh/450x450asteroid.png?dl=0");
     this.width = size;
     this.height = size;
-    this.offsetX = -this.width/2;
-    this.offsetY = -this.height/2;
+    this.xoffset = -this.width/2;
+    this.yoffset = -this.height/2;
     
     this.x = x;
     this.y = y;
@@ -137,11 +137,13 @@ Particle.prototype.update = function(d){
     //console.log(this.rotSpeed);
     this.rotation += this.rotSpeed;
     
-        //if(this.y > canvas.height-this.offsetY){
-        /*if(this.y > canvas.height/2){
-            world.removeChild(newPart);
-            parts.pop(newPart);
-        }*/
+	for(var i = 0; i < parts.length; i++){
+       	if(parts[i].y > canvas.height/2){
+           	world.removeChild(parts[i]);
+           	parts.pop(parts[i]);
+           	console.log("callcount");
+		}
+    }
     /*if(this.y > canvas.height-this.offsetY){
         this.x = canvas.width*Math.random();
         this.y = this.offsetY;
@@ -242,7 +244,6 @@ gameScreen.init = function() {
 		//Define a speed
 		var speed = 2;
 
-		console.log("hi");
 		//If the A key is pressed move to the left
 		if (gInput.left) {
 			this.x -= speed;
@@ -298,6 +299,16 @@ gameScreen.init = function() {
         world.addChild(newPart); 
     }
 	
+	/*parts.update = function(){
+		for(var i = 0; i < parts.length; i++){
+        	if(parts[i].y > canvas.height/2){
+            	world.removeChild(parts[i]);
+            	parts.pop(parts[i]);
+            	console.log("callcount");
+			}
+        }
+	}*/
+	
 	/*document.onkeydown = checkKey;
 	var probeCounter = 0;
 	checkKey(e.keyCode == '38');*/
@@ -328,7 +339,7 @@ gameScreen.init = function() {
 			var proSpeed = 4;
 			//console.log("CREATED2");
 			probe.update = function(d) {
-				console.log("UPDATING");
+				//console.log("UPDATING");
 				this.y -= proSpeed;
 				if (gInput.slow) {
 					probe.y += 2;
@@ -351,55 +362,6 @@ gameScreen.init = function() {
         }
     }
     world.updateChildren(d);*/
-   
-   	/*mySprite.update = function(d) {
-		//Define a speed
-		var speed = 2;
-
-		//If the A key is pressed move to the left
-		if (gInput.left) {
-			this.x -= speed;
-		}
-
-		//If the D key is pressed move to the right
-		if (gInput.right) {
-			this.x += speed;
-		}
-
-		//If the S key is pressed move down
-		if (gInput.down) {
-			this.y += speed;
-		}
-
-		//If the W key is pressed move up
-		if (gInput.up) {
-			this.y -= speed;
-		}
-
-		if (gInput.rotL) {
-			this.rotation -= 0.08;
-		}
-
-		if (gInput.rotR) {
-			this.rotation += 0.08;
-		}
-
-		//Sprite stops at edge of screen
-		if (this.x < 0) {
-			this.x = 0;
-		} else if (this.x > canvas.width) {
-			this.x = canvas.width;
-		}
-
-		if (this.y < 0) {
-			this.y = 0;
-		}
-		if (this.y > canvas.height) {
-			this.y = canvas.height;
-		}
-
-	}*/
-	
 //}
 
 var pauseMenu = new Screen(false, true);
