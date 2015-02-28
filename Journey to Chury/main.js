@@ -290,6 +290,12 @@ gameScreen.init = function() {
 
 		if (RectCircleColliding(newPart, mySprite)) {
 			mySprite.x = canvas.width/2;
+			if(newPart.y >= canvas.height/2){
+				mySprite.y = 0 + mySprite.height/2;
+			}
+			else{
+				mySprite.y = canvas.height - mySprite.height/2;
+			}
 		}
 	}
 	
