@@ -101,13 +101,13 @@ world.addChild(screenMan);
 //Create a main menu screen
 var mainMenu = new Screen(false, false);
 //Optionally set a background for the screen
-mainMenu.image = Textures.load("http://www.jar42.com/brine/lab1/images/samson.png");
+mainMenu.image = Textures.load("https://dl.dropboxusercontent.com/s/qvxjge9jodh6fej/BackgroundTEMP.png?dl=0");
 screenMan.push(mainMenu);
 
 //asteroid initliazation function
 function Particle(x, y, size){
     Sprite.call(this);
-    this.image = Textures.load("https://dl.dropboxusercontent.com/s/0hk1d3tngi90yqh/450x450asteroid.png?dl=0");
+    this.image = Textures.load("https://dl.dropboxusercontent.com/s/a7dktb3zfyoihbi/N8_LxXp1D9BFo0upe3HfGAcox8esF0a3POHO3w0QewgFs5FnqrvsoVRO5knWgLSFeyMThw%3Ds190.png?dl=0");
     this.width = size;
     this.height = size;
     this.xoffset = -this.width/2;
@@ -137,18 +137,18 @@ Particle.prototype.update = function(d){
     //console.log(this.rotSpeed);
     this.rotation += this.rotSpeed;
     
-	for(var i = 0; i < parts.length; i++){
-       	if(parts[i].y > canvas.height/2){
+	/*for(var i = 0; i < parts.length; i++){
+		if(parts[i].y > canvas.height-parts[i].yoffset){
+       	//if(parts[i].y > canvas.height/2){
            	world.removeChild(parts[i]);
-           	parts.pop(parts[i]);
+           	//parts.pop(parts[i]);
            	console.log("callcount");
 		}
-    }
-    /*if(this.y > canvas.height-this.offsetY){
-        this.x = canvas.width*Math.random();
-        this.y = this.offsetY;
-        //this.vel.y = 0;
     }*/
+    if(this.y > canvas.height-this.yoffset){
+        this.x = canvas.width*Math.random();
+        this.y = this.yoffset;
+    }
 }
 
 //Set init properties
@@ -163,10 +163,12 @@ mainMenu.init = function() {
 	//Main menu sprites
 	var mmSprite = new Sprite();
 	mmSprite.x = canvas.width / 2;
-	mmSprite.y = canvas.height / 2;
+	mmSprite.y = canvas.height / 4;
+	mmSprite.width = 150;
+	mmSprite.height = 30;
 	mmSprite.xoffset = -mmSprite.width / 2;
 	mmSprite.yoffset = -mmSprite.height / 2;
-	mmSprite.image = Textures.load("http://www.jar42.com/brine/lab1/images/crichton.jpg");
+	mmSprite.image = Textures.load("https://dl.dropboxusercontent.com/s/5bvs7oc3o3mz8vq/u9AH7s9j3DP9cbdUwyYZX_hCLtZCOtRfzTMoBAJX2Eu84DOja8sCT1gm54VIuekhPLDmIA%3Dw1246-h582.png?dl=0");
 	mmSprite.update = function(d) {
 		mmSprite.rotation += 0.01;
 	}
@@ -192,7 +194,7 @@ mainMenu.init = function() {
 
 }
 var gameScreen = new Screen(false, true);
-gameScreen.image = Textures.load("http://www.jar42.com/brine/lab1/images/chiana.jpg");
+gameScreen.image = Textures.load("https://dl.dropboxusercontent.com/s/qvxjge9jodh6fej/BackgroundTEMP.png?dl=0");
 
 //Set init properties
 gameScreen.init = function() {
@@ -215,7 +217,7 @@ gameScreen.init = function() {
 	mySprite.radius = 75;
 
 	//Set the sprite's texture
-	mySprite.image = Textures.load("https://dl.dropboxusercontent.com/s/x2zbgfies4zxl18/satellite.png?dl=0");
+	mySprite.image = Textures.load("https://dl.dropboxusercontent.com/s/5bvs7oc3o3mz8vq/u9AH7s9j3DP9cbdUwyYZX_hCLtZCOtRfzTMoBAJX2Eu84DOja8sCT1gm54VIuekhPLDmIA%3Dw1246-h582.png?dl=0");
 
 	//Add the sprite to the world
 	this.stage.addChild(mySprite);
@@ -286,12 +288,16 @@ gameScreen.init = function() {
 			this.rotation += 0.08;
 		}
 
+		if (RectCircleColliding(newPart, mySprite)) {
+			mySprite.x = canvas.width/2;
+		}
 	}
 	
 	// return true if the rectangle and circle are colliding
     function RectCircleColliding(circle,rect){
         var distX = Math.abs(circle.x - ax-rect.width/2);
         var distY = Math.abs(circle.y - ay-rect.height/2);
+        console.log(circle.y);
 
         if (distX > (rect.width/2 + circle.radius)) { return false; }
         if (distY > (rect.height/2 + circle.radius)) { return false; }
@@ -332,9 +338,6 @@ gameScreen.init = function() {
         world.addChild(newPart); 
     }
     
-    if (RectCircleColliding(newPart, mySprite)) {
-		mySprite.x = canvas.width/2;
-	}
     /*
     function cirCol(c1, c2) {
     	var cirX = c1.x - c2.x;
@@ -388,13 +391,13 @@ gameScreen.init = function() {
 		if (e.keyCode == '38') {//Up Arrow
 			console.log("Up");
 			var probe = new Sprite();
-			probe.width = 50;
-			probe.height = 26;
+			probe.width = 25;
+			probe.height = 25;
 			probe.x = mySprite.x;
 			probe.y = mySprite.y;
 			probe.xoffset = -probe.width / 2;
 			probe.yoffset = -probe.height / 2;
-			probe.image = Textures.load("https://dl.dropboxusercontent.com/s/yg9d8rdfs4bmggj/Probe.png?dl=0");
+			probe.image = Textures.load("https://dl.dropboxusercontent.com/s/wedgo4jl8x0gufn/LLBFC3CDphNTeI9SunsZrdbYBv-fpCMsD8XNBUMlcC7OqkoHhAxBPHau42vRJQLUDo6sEg%3Ds190.png?dl=0");
 			//console.log("CREATED0");
 			//If the Up arrow is pressed, shoot probe
 			if (probeCounter == 0) {
@@ -409,8 +412,12 @@ gameScreen.init = function() {
 				this.y -= proSpeed;
 				if (gInput.slow) {
 					probe.y += 2;
-					console.log("SLOWING");
+					//console.log("SLOWING");
 				}
+				if(probe.y < 0+probe.offsetY){
+				//if(probe.y < canvas.height/2){
+					gameScreen.stage.removeChild(probe);
+    			}
 			}
 		}
 	}
