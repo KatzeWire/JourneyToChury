@@ -192,6 +192,18 @@ mainMenu.init = function() {
 	resumeGame.label.fontSize = 30;
 	resumeGame.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
 	this.gui.addChild(resumeGame);
+	
+	
+	var instructions = new TextButton("Instructions");
+	instructions.y = 100;
+	instructions.center = true;
+	instructions.label.dropShadow = true;
+	instructions.label.fontSize = 30;
+	instructions.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
+	this.gui.addChild(instructions);
+	instructions.func = function() {
+		screenMan.push(instructionsMenu);
+	}
 
 }
 var gameScreen = new Screen(false, true);
@@ -541,13 +553,29 @@ pauseMenu.init = function() {
 		screenMan.remove(pauseMenu);
 		screenMan.remove(gameScreen);
 	}
-	var restartGame = new TextButton("Restart Game");
-	restartGame.y = 100;
-	restartGame.center = true;
-	restartGame.label.dropShadow = true;
-	restartGame.label.fontSize = 30;
-	restartGame.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
-	this.gui.addChild(restartGame);
+}
+
+var instructionsMenu = new Screen(false, true);
+//Set init properties
+instructionsMenu.init = function() {
+	//Bg fills canvas
+	this.width = canvas.width;
+	this.height = canvas.height;
+
+	this.gui.x = canvas.width / 2;
+	this.gui.y = canvas.height / 2;
+
+	var returnToMenu = new TextButton("Main Menu");
+	returnToMenu.y = 50;
+	returnToMenu.center = true;
+	returnToMenu.label.dropShadow = true;
+	returnToMenu.label.fontSize = 30;
+	returnToMenu.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
+	this.gui.addChild(returnToMenu);
+	returnToMenu.func = function() {
+		screenMan.remove(instructionsMenu);
+		screenMan.remove(gameScreen);
+	}
 }
 
 gInput.addFunc(27, function() {
