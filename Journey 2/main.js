@@ -6,6 +6,9 @@ var numParts = 15;
 var parts = [];
 //Score
 var score = 0;
+var c = 0; //score counter
+//Wave Counter
+var wave = 0;
 
 //Screen class
 function Screen(alwaysUpdate, alwaysDraw) {
@@ -123,6 +126,7 @@ function Particle(x, y, size){
     //this.vel = new Vector(0,0);
     this.rotSpeed = 0;
     this.radius = size/2;
+    this.speed = 1;
 }
 
 Particle.prototype = new Sprite();
@@ -149,13 +153,25 @@ Particle.prototype.update = function(d){
            	console.log("callcount");
 		}
     }*/
+ 
     if(this.y > canvas.height-this.yoffset){
         this.x = canvas.width*Math.random();
         this.y = this.yoffset;
-        //score++;
-        //console.log(score);
-    }
+		c++;
+		//console.log(c);
+		if(c%15 == 0){
+			score++;
+    		//console.log(score);
+		}
+    }        
+
 }
+
+/*function Levels(level, speed, wave, parts[]){
+	for(0 <= level <= 3){
+		
+	}
+}*/
 
 //Set init properties
 mainMenu.init = function() {
@@ -271,13 +287,21 @@ gameScreen.init = function() {
 	//scoreDisplay.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
 	world.addChild(scoreDisplay);
 	
-	if(this.y > canvas.height-this.yoffset){
+	/*if(this.y > canvas.height-this.yoffset){
         score++;
         console.log(score);
         scoreDisplay.text = "Score: "+score;
-    }
+    }*/
+    
+    /*scoreDisplay.text.update = function(d){
+    	scoreDisplay.text = "Score: "+score;
+    	console.log(score);
+    }*/
 	
 	mySprite.update = function(d) {
+		scoreDisplay.text = "Score: "+score;
+    	//console.log(score);
+		
 		//Define a speed
 		var speed = 2;
 
@@ -347,6 +371,7 @@ gameScreen.init = function() {
 				mySprite.x = canvas.width/2;
 				mySprite.y = canvas.height - 100;
 				mySprite.rotation = 0;
+				//score--;
 				/*L1x = canvas.width/2 - 60;
 				L1y = canvas.height - 75;
 				L2x = canvas.width/2 - 30;
