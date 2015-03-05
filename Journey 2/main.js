@@ -4,6 +4,8 @@ use2D = true;
 var maxRot = 0.05;
 var numParts = 15;
 var parts = [];
+//Score
+var score = 0;
 
 //Screen class
 function Screen(alwaysUpdate, alwaysDraw) {
@@ -122,6 +124,7 @@ function Particle(x, y, size){
     this.rotSpeed = 0;
     this.radius = size/2;
 }
+
 Particle.prototype = new Sprite();
 
 //asteroid particle system update
@@ -149,6 +152,7 @@ Particle.prototype.update = function(d){
     if(this.y > canvas.height-this.yoffset){
         this.x = canvas.width*Math.random();
         this.y = this.yoffset;
+        score+=1;
     }
 }
 
@@ -253,6 +257,18 @@ gameScreen.init = function() {
 	//The sprite's x and y velocities
 	var xvel = 1;
 	var yvel = 1;
+	
+	
+	
+	var scoreDisplay = new TextButton("Score: "+score);
+	scoreDisplay.y = 10;
+	scoreDisplay.x = 10;
+	//scoreDisplay.center = true;
+	//scoreDisplay.label.dropShadow = true;
+	scoreDisplay.label.fontSize = 30;
+	scoreDisplay.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
+	this.gui.addChild(scoreDisplay);
+	
 	
 	mySprite.update = function(d) {
 		//Define a speed
@@ -361,30 +377,6 @@ gameScreen.init = function() {
 		//console.log("rot"+x);
 	}
 	
-	
-	//Keep track of corners
-	var ax = (canvas.width/2)-75, ay = canvas.height-75-25;
-	var bx = (canvas.width/2)+75, by = canvas.height-75-25;
-	var cx = (canvas.width/2)-75, cy = canvas.height-75+25;
-	var dx = (canvas.width/2)+75, dy = canvas.height-75+25;
-		
-	// return true if the rectangle and circle are colliding
-    function RectCircleColliding(circle,rect){
-    	var resultTL = rotTracker(mySprite.x, mySprite.y, ax, ay, mySprite.rotation);
-		ax = resultTL.x;
-		ay = resultTL.y;
-		
-		var resultTR = rotTracker(mySprite.x, mySprite.y, bx, by, mySprite.rotation);
-		bx = resultTR.x;
-		by = resultTL.y;
-		
-		var resultBL = rotTracker(mySprite.x, mySprite.y, cx, cy, mySprite.rotation);
-		cx = resultBL.x;
-		cy = resultBL.y;
-		
-		var resultBR = rotTracker(mySprite.x, mySprite.y, dx, dy, mySprite.rotation);
-		dx = resultBR.x;
-		dy = resultBR.y;
         var distX = Math.abs(circle.x - ax-rect.width/2);
         var distY = Math.abs(circle.y - ay-rect.height/2);
 //        console.log(circle.y);
@@ -418,35 +410,8 @@ gameScreen.init = function() {
     }
     
     /*
-    function cirCol(c1, c2) {
-    	var cirX = c1.x - c2.x;
-    	var cirY = c1.y - c2.y;
-    	var dist = c1.radius + c2.radius;
-    	
-    	return (cirX * cirX + cirY * cirY <= dist * dist);
-    }
     
-    function collision(cir(cenX, cenY, rad), rect(ax, ay, bx, by, cx, cy, dx, dy)){
-    	
-    }
 	
-	if (cirCol == true) {
-		var resultTL = rotTracker(mySprite.x, mySprite.y, ax, ay, mySprite.rotation);
-		ax = resultTL.x;
-		ay = resultTL.y;
-		
-		var resultTR = rotTracker(mySprite.x, mySprite.y, bx, by, mySprite.rotation);
-		bx = resultTR.x;
-		by = resultTL.y;
-		
-		var resultBL = rotTracker(mySprite.x, mySprite.y, cx, cy, mySprite.rotation);
-		cx = resultBL.x;
-		cy = resultBL.y;
-		
-		var resultBR = rotTracker(mySprite.x, mySprite.y, dx, dy, mySprite.rotation);
-		dx = resultBR.x;
-		dy = resultBR.y;
-	}*/
 	/*parts.update = function(){
 		for(var i = 0; i < parts.length; i++){
         	if(parts[i].y > canvas.height/2){
@@ -496,6 +461,7 @@ gameScreen.init = function() {
 				if(probe.y < 0+probe.offsetY){
 				//if(probe.y < canvas.height/2){
 					gameScreen.stage.removeChild(probe);
+					
     			}
 			}
 		}
