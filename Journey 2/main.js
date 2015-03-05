@@ -152,7 +152,8 @@ Particle.prototype.update = function(d){
     if(this.y > canvas.height-this.yoffset){
         this.x = canvas.width*Math.random();
         this.y = this.yoffset;
-        score+=1;
+        //score++;
+        //console.log(score);
     }
 }
 
@@ -260,15 +261,21 @@ gameScreen.init = function() {
 	
 	
 	
-	var scoreDisplay = new TextButton("Score: "+score);
+	var scoreDisplay = new TextBox();
 	scoreDisplay.y = 10;
 	scoreDisplay.x = 10;
-	//scoreDisplay.center = true;
-	//scoreDisplay.label.dropShadow = true;
-	scoreDisplay.label.fontSize = 30;
-	scoreDisplay.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
-	this.gui.addChild(scoreDisplay);
+	scoreDisplay.fontSize = 30;
+	scoreDisplay.drawBG = true;
+	scoreDisplay.text = "Score: " +score;
+	scoreDisplay.bgColor = "white";
+	//scoreDisplay.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
+	world.addChild(scoreDisplay);
 	
+	if(this.y > canvas.height-this.yoffset){
+        score++;
+        console.log(score);
+        scoreDisplay.text = "Score: "+score;
+    }
 	
 	mySprite.update = function(d) {
 		//Define a speed
