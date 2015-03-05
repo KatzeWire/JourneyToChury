@@ -184,18 +184,11 @@ mainMenu.init = function() {
 
 	newGame.func = function() {
 		screenMan.push(gameScreen);
+		
 	}
-	var resumeGame = new TextButton("Resume Game");
-	resumeGame.y = 50;
-	resumeGame.center = true;
-	resumeGame.label.dropShadow = true;
-	resumeGame.label.fontSize = 30;
-	resumeGame.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
-	this.gui.addChild(resumeGame);
-	
 	
 	var instructions = new TextButton("Instructions");
-	instructions.y = 100;
+	instructions.y = 50;
 	instructions.center = true;
 	instructions.label.dropShadow = true;
 	instructions.label.fontSize = 30;
@@ -496,7 +489,7 @@ gameScreen.init = function() {
 			probe.update = function(d) {
 				//console.log("UPDATING");
 				this.y -= proSpeed;
-				if (gInput.slow) {
+				if (gInput.slow) { 
 					probe.y += 2;
 					//console.log("SLOWING");
 				}
@@ -523,7 +516,7 @@ gameScreen.init = function() {
     world.updateChildren(d);*/
 //}
 
-var pauseMenu = new Screen(false, true);
+/*var pauseMenu = new Screen(false, true);
 //Set init properties
 pauseMenu.init = function() {
 	//Bg fills canvas
@@ -553,7 +546,7 @@ pauseMenu.init = function() {
 		screenMan.remove(pauseMenu);
 		screenMan.remove(gameScreen);
 	}
-}
+}*/
 
 var instructionsMenu = new Screen(false, true);
 //Set init properties
@@ -578,11 +571,11 @@ instructionsMenu.init = function() {
 	}
 }
 
-gInput.addFunc(27, function() {
+/*gInput.addFunc(27, function() {
 	if (screenMan.screens.find(gameScreen) && !screenMan.screens.find(pauseMenu)) {
 		screenMan.push(pauseMenu);
 	}
-}
+}*/
 
 
 
@@ -623,4 +616,4 @@ gInput.addFunc(27, function() {
 	}
 }*/
 
-);
+;
