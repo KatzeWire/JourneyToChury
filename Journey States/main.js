@@ -170,7 +170,7 @@ Particle.prototype.update = function(d){
 		if(c%numParts == 0){
 			score++;
 			wave++;
-    		//console.log(score);
+    		//console.log(wave);
 		}
     }        
 
@@ -233,7 +233,10 @@ function Level(s, w){ //speed, wave, parts[]
         world.addChild(newPart);
     }
     console.log("Wave:" + wave);
-    if(wave > w){
+    while(true){
+    	if(wave > w ) break;
+    }
+    if(wave > w){ //if this, call [below] as a function in particle update
     	console.log(wave);
     	//remove asteroids that are falling
     	for(var i = 0; i < parts.length; i++){
@@ -282,6 +285,7 @@ function Level(s, w){ //speed, wave, parts[]
     		world.removeChild(probe);
     		//break;
     	}*/
+    	
 }
 
 //Set init properties
