@@ -173,7 +173,64 @@ Particle.prototype.update = function(d){
     		//console.log(wave);
 		}
     }        
-
+	switch(levels){
+		case 1:
+			switch(wave){
+				case 3:		
+					getWave();
+					break;
+				default:
+					break;
+			}
+		case 2:
+			switch(wave){
+				case 6:		
+					getWave();
+					break;
+				default:
+					break;
+			}
+		case 3:
+			switch(wave){
+				case 12:		
+					getWave();
+					break;
+				default:
+					break;
+			}
+		case 4:
+			switch(wave){
+				case 6:		
+					getWave();
+					break;
+				default:
+					break;
+			}
+		case 5:
+			switch(wave){
+				case 12:		
+					getWave();
+					break;
+				default:
+					break;
+			}
+		case 6:
+			switch(wave){
+				case 6:		
+					getWave();
+					break;
+				default:
+					break;
+			}
+		default:
+			switch(wave){
+				case 12:		
+					getWave();
+					break;
+				default:
+					break;
+			}
+	}
 }
 
 function Comet(x, y){
@@ -199,25 +256,28 @@ Comet.prototype = new Sprite();
 
 //asteroid particle system update
 Comet.prototype.update = function(d){
-    this.y += this.speed; //originally was 1, 4 is very fast
-    this.x += this.speed;
+    //this.y += this.speed; //originally was 1, 4 is very fast
+    //this.x += this.speed;
     
     //console.log(this.rotSpeed);
     this.rotation += this.rotSpeed;
     
-    if(this.x > canvas.width+this.xoffset){
+    console.log(this.x);
+    
+    if(this.x > canvas.width-this.width/2){
         this.x -= this.speed;
+        //console.log(this.speed);
     }
-    if(this.x > 0-this.xoffset){
+    if(this.x < 0+this.width/2){
         this.x += this.speed;
     }
-    if(this.y > 250+this.yoffset){
+    if(this.y > 250-this.width/2){
         this.y -= this.speed;
     }
-    if(this.x > 0-this.yoffset){
+    if(this.y < 0+this.width/2){
         this.y += this.speed;
     }
-
+	
 }
 
 function Level(s, w){ //speed, wave, parts[]
@@ -232,11 +292,8 @@ function Level(s, w){ //speed, wave, parts[]
        	parts.push(newPart);
         world.addChild(newPart);
     }
-    console.log("Wave:" + wave);
-    while(true){
-    	if(wave > w ) break;
-    }
-    if(wave > w){ //if this, call [below] as a function in particle update
+    //console.log("Wave:" + wave);
+    /*if(wave > w){ //if this, call [below] as a function in particle update
     	console.log(wave);
     	//remove asteroids that are falling
     	for(var i = 0; i < parts.length; i++){
@@ -269,7 +326,7 @@ function Level(s, w){ //speed, wave, parts[]
     		world.removeChild(probe);
     		//break;
     	}
-    }
+    }*/
         //if probe goes off the top of the screen
     	/*if(probe.x < 0+probe.offset){
     		levels++;
@@ -286,6 +343,62 @@ function Level(s, w){ //speed, wave, parts[]
     		//break;
     	}*/
     	
+}
+
+function getWave(){
+	//console.log(wave);
+    //remove asteroids that are falling
+	//console.log(parts.length);
+    for(var i = 0; i < parts.length; i++){
+    	//console.log(parts.length);
+		//if(parts[i].y > canvas.height-parts[i].yoffset){
+      		//if(parts[i].y > canvas.height/2){
+    		world.removeChild(parts[i]);
+           	//parts.pop(parts[i]);  //try putting this in another for loop
+           	//console.log("callcount");
+		//}
+    }
+    //new comet spawn
+    //var newComet = new Comet(Math.floor(Math.random() * -26) - 70, Math.floor(Math.random() * 20) - 70);
+    var newComet = new Comet(10,10);
+    newComet.rotSpeed = -maxRot+(2*maxRot)*Math.random();
+    //console.log(newComet.x);
+    world.addChild(newComet);
+    //Allow shooting one probe
+    probeCounter = 0;
+    //if probe goes off the top of the screen
+    /*if(probe.y < 0+probe.yoffset){
+    	levels++;
+    	wave = 0;
+    	world.removeChild(newComet);
+    	world.removeChild(probe);
+    	//break;
+    }else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
+    	levels++;
+    	wave = 0;
+    	//score += 10;
+    	world.removeChild(newComet);
+    	world.removeChild(probe);
+    	//break;
+    }*/
+}
+
+function endLevel(){
+	//if probe goes off top of the screeen
+	if(probe.y < 0+probe.offsetY){
+    	levels++;
+    	wave = 0;
+    	world.removeChild(newComet);
+    	world.removeChild(probe);
+    	//break;
+    }else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
+    	levels++;
+    	wave = 0;
+    	//score += 10;
+    	world.removeChild(newComet);
+    	world.removeChild(probe);
+    	//break;
+    }
 }
 
 //Set init properties
@@ -605,11 +718,12 @@ gameScreen.init = function() {
 					probe.y += 2;
 					//console.log("SLOWING");
 				}
-				if(probe.y < 0+probe.offsetY){
+				/*if(probe.y < 0+probe.offsetY){
 				//if(probe.y < canvas.height/2){
 					gameScreen.stage.removeChild(probe);
 					
-    			}
+    			}*/
+    			endLevel();
 			}
 		}
 	}
