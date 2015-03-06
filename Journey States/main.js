@@ -3,6 +3,7 @@ use2D = true;
 
 var maxRot = 0.05;
 var probeCounter = 0;
+var probe = new Sprite();
 //Asteroid counter and array
 var numParts = 15;
 var parts = [];
@@ -113,6 +114,15 @@ var mainMenu = new Screen(false, false);
 mainMenu.image = Textures.load("https://dl.dropboxusercontent.com/s/qvxjge9jodh6fej/BackgroundTEMP.png?dl=0");
 screenMan.push(mainMenu);
 
+//collision function
+function cirOnCir(c1x, c1y, c2x, c2y, c1r, c2r) {
+	var dx = c1x - c2x;
+	var dy = c1y - c2y;
+	var dist = c1r + c2r;
+ 
+	return (dx * dx + dy * dy <= dist * dist)
+}
+
 //asteroid initliazation function
 function Particle(x, y, size,speed){
     Sprite.call(this);
@@ -137,15 +147,8 @@ Particle.prototype = new Sprite();
 
 //asteroid particle system update
 Particle.prototype.update = function(d){
-    //this.x += Math.sin(this.rotation);
-        
-    //this.x += (gInput.mouse.x-this.x)/200;
-    
-    //this.vel.y += gravity*this.width;
-    //this.vel.y += .003;
-    //this.y += this.vel.y;
     this.y += this.speed; //originally was 1, 4 is very fast
-    console.log(this.speed);
+    //console.log(this.speed);
     
     //console.log(this.rotSpeed);
     this.rotation += this.rotSpeed;
@@ -229,7 +232,9 @@ function Level(s, w){ //speed, wave, parts[]
        	parts.push(newPart);
         world.addChild(newPart);
     }
-    while(wave > w){
+    console.log("Wave:" + wave);
+    if(wave > w){
+    	console.log(wave);
     	//remove asteroids that are falling
     	for(var i = 0; i < parts.length; i++){
 			if(parts[i].y > canvas.height-parts[i].yoffset){
@@ -252,16 +257,31 @@ function Level(s, w){ //speed, wave, parts[]
     		wave = 0;
     		world.removeChild(newComet);
     		world.removeChild(probe);
-    		break;
+    		//break;
     	}else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
     		levels++;
     		wave = 0;
     		score += 10;
     		world.removeChild(newComet);
     		world.removeChild(probe);
-    		break;
+    		//break;
     	}
     }
+        //if probe goes off the top of the screen
+    	/*if(probe.x < 0+probe.offset){
+    		levels++;
+    		wave = 0;
+    		world.removeChild(newComet);
+    		world.removeChild(probe);
+    		//break;
+    	}else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
+    		levels++;
+    		wave = 0;
+    		score += 10;
+    		world.removeChild(newComet);
+    		world.removeChild(probe);
+    		//break;
+    	}*/
 }
 
 //Set init properties
@@ -476,13 +496,13 @@ gameScreen.init = function() {
 		}
 	}
 	
-	function cirOnCir(c1x, c1y, c2x, c2y, c1r, c2r) {
+	/*function cirOnCir(c1x, c1y, c2x, c2y, c1r, c2r) {
 		var dx = c1x - c2x;
 		var dy = c1y - c2y;
 		var dist = c1r + c2r;
  
 		return (dx * dx + dy * dy <= dist * dist)
-	}
+	}*/
 	
 	var L1x = canvas.width/2 - 60;
 	var	L1y = canvas.height - 75;
@@ -557,7 +577,7 @@ gameScreen.init = function() {
 		e = e || window.event;
 		if (e.keyCode == '38') {//Up Arrow
 			console.log("Up");
-			var probe = new Sprite();
+			//var probe = new Sprite();
 			probe.width = 25;
 			probe.height = 25;
 			probe.x = mySprite.x;
@@ -593,7 +613,7 @@ gameScreen.init = function() {
 	//level genteration based on level number
 	switch(levels){
 		case 1:
-			Level(1,3);
+			Level(4,3);
 			break;
 		case 2:
 			Level(2,6);
