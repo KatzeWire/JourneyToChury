@@ -2,6 +2,8 @@ uclearColor = [0, 0, 0, 0];
 use2D = true;
 
 var maxRot = 0.05;
+var probeCounter = 0;
+//Asteroid counter and array
 var numParts = 15;
 var parts = [];
 //Score
@@ -9,6 +11,8 @@ var score = 0;
 var c = 0; //score counter
 //Wave Counter
 var wave = 0;
+//Level Counter
+var levels = 1;
 
 //Screen class
 function Screen(alwaysUpdate, alwaysDraw) {
@@ -110,7 +114,7 @@ mainMenu.image = Textures.load("https://dl.dropboxusercontent.com/s/qvxjge9jodh6
 screenMan.push(mainMenu);
 
 //asteroid initliazation function
-function Particle(x, y, size){
+function Particle(x, y, size,speed){
     Sprite.call(this);
     this.image = Textures.load("https://dl.dropboxusercontent.com/s/a7dktb3zfyoihbi/N8_LxXp1D9BFo0upe3HfGAcox8esF0a3POHO3w0QewgFs5FnqrvsoVRO5knWgLSFeyMThw%3Ds190.png?dl=0");
     this.width = size;
@@ -126,7 +130,7 @@ function Particle(x, y, size){
     //this.vel = new Vector(0,0);
     this.rotSpeed = 0;
     this.radius = size/2;
-    this.speed = 1;
+    this.speed = speed;
 }
 
 Particle.prototype = new Sprite();
@@ -141,6 +145,7 @@ Particle.prototype.update = function(d){
     //this.vel.y += .003;
     //this.y += this.vel.y;
     this.y += this.speed; //originally was 1, 4 is very fast
+    console.log(this.speed);
     
     //console.log(this.rotSpeed);
     this.rotation += this.rotSpeed;
@@ -159,19 +164,105 @@ Particle.prototype.update = function(d){
         this.y = this.yoffset;
 		c++;
 		//console.log(c);
-		if(c%15 == 0){
+		if(c%numParts == 0){
 			score++;
+			wave++;
     		//console.log(score);
 		}
     }        
 
 }
 
-/*function Levels(level, speed, wave, parts[]){
-	for(0 <= level <= 3){
-		
-	}
-}*/
+function Comet(x, y){
+    Sprite.call(this);
+    this.image = Textures.load("https://dl.dropboxusercontent.com/s/a7dktb3zfyoihbi/N8_LxXp1D9BFo0upe3HfGAcox8esF0a3POHO3w0QewgFs5FnqrvsoVRO5knWgLSFeyMThw%3Ds190.png?dl=0");
+    this.width = 50;
+    this.height = 50;
+    this.xoffset = -this.width/2;
+    this.yoffset = -this.height/2;
+    
+    this.x = x;
+    this.y = y;
+    
+//    this.blendFunc = BLEND_ADD; 
+//    this.life = 0;
+    //this.vel = new Vector(0,0);
+    this.rotSpeed = 0;
+    this.radius = this.width/2;
+    this.speed = 1;
+}
+
+Comet.prototype = new Sprite();
+
+//asteroid particle system update
+Comet.prototype.update = function(d){
+    this.y += this.speed; //originally was 1, 4 is very fast
+    this.x += this.speed;
+    
+    //console.log(this.rotSpeed);
+    this.rotation += this.rotSpeed;
+    
+    if(this.x > canvas.width+this.xoffset){
+        this.x -= this.speed;
+    }
+    if(this.x > 0-this.xoffset){
+        this.x += this.speed;
+    }
+    if(this.y > 250+this.yoffset){
+        this.y -= this.speed;
+    }
+    if(this.x > 0-this.yoffset){
+        this.y += this.speed;
+    }
+
+}
+
+function Level(s, w){ //speed, wave, parts[]
+	//for(1 <= level <= 3){
+	//Particle.speed = s;
+	probeCounter = 1; //can't shoot a probe
+	//console.log(Particle.speed);
+	//initializing asteroid wave
+	for(i=0; parts.length < numParts; i++){
+       	var newPart = new Particle(canvas.width*Math.random(), 0, 20+25*Math.random(), s);
+        newPart.rotSpeed = -maxRot+(2*maxRot)*Math.random();
+       	parts.push(newPart);
+        world.addChild(newPart);
+    }
+    while(wave > w){
+    	//remove asteroids that are falling
+    	for(var i = 0; i < parts.length; i++){
+			if(parts[i].y > canvas.height-parts[i].yoffset){
+       		//if(parts[i].y > canvas.height/2){
+           		world.removeChild(parts[i]);
+           		parts.pop(parts[i]);
+           		//console.log("callcount");
+			}
+    	}
+    	//new comet spawn
+    	//var newComet = new Comet(Math.floor(Math.random() * -26) - 70, Math.floor(Math.random() * 20) - 70);
+    	var newComet = new Comet(25,25);
+    	newComet.rotSpeed = -maxRot+(2*maxRot)*Math.random();
+    	world.addChild(newComet);
+    	//Allow shooting one probe
+    	probeCounter = 0;
+    	//if probe goes off the top of the screen
+    	if(probe.x < 0+probe.offset){
+    		levels++;
+    		wave = 0;
+    		world.removeChild(newComet);
+    		world.removeChild(probe);
+    		break;
+    	}else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
+    		levels++;
+    		wave = 0;
+    		score += 10;
+    		world.removeChild(newComet);
+    		world.removeChild(probe);
+    		break;
+    	}
+    }
+}
 
 //Set init properties
 mainMenu.init = function() {
@@ -432,14 +523,14 @@ gameScreen.init = function() {
     }*/
 	
 	//initializing asteroid wave
-	for(i=0; parts.length < numParts; i++){
+	/*for(i=0; parts.length < numParts; i++){
         //var newPart = new Particle(canvas.width*Math.random(), 0, 30);
         //var newPart = new Particle(canvas.width*Math.random(), canvas.height/3*Math.random(), 20+25*Math.random());
         var newPart = new Particle(canvas.width*Math.random(), 0, 20+25*Math.random());
         newPart.rotSpeed = -maxRot+(2*maxRot)*Math.random();
         parts.push(newPart);
         world.addChild(newPart); 
-    }
+    }*/
     
     /*
     
@@ -460,7 +551,7 @@ gameScreen.init = function() {
 	//shooting();
 
 	document.onkeydown = checkKey;
-	var probeCounter = 0;
+	//var probeCounter = 0;
 	//canvas.onmousedown = function(e){
 	function checkKey(e) {
 		e = e || window.event;
@@ -498,6 +589,57 @@ gameScreen.init = function() {
 			}
 		}
 	}
+	
+	//level genteration based on level number
+	switch(levels){
+		case 1:
+			Level(1,3);
+			break;
+		case 2:
+			Level(2,6);
+			break;
+		case 3:
+			Level(2,12);
+			break;
+		case 4:
+			Level(3,6);
+			break;
+		case 5:
+			Level(3,12);
+			break;
+		case 6:
+			Level(4,6);
+			break;
+		default:
+			Level(4,12);
+			break;
+	}
+	
+	/*if(1 <= levels <= 2){
+		Level(4,5);
+		//console.log("level1");
+	}*/
+	/*while(2 < levels <= 4){
+		Level(1,10);
+	} 
+	while(4 < levels <= 6){
+		Level(2,6);
+	} 
+	while(6 < levels <= 8){
+		Level(2,12);
+	} 
+	while(8 < levels <= 10){
+		Level(3,6);
+	} 
+	while(10 < levels <= 12){
+		Level(3,12);
+	} 
+	while(12 < levels <= 14){
+		Level(4,6);
+	} 
+	while(levels > 14){
+		Level(4,12);
+	}*/
 }
 
 //gameScreen's update function
