@@ -9,7 +9,7 @@ var score = 0;
 var c = 0; //score counter
 //Wave Counter
 var wave = 0;
-
+var whoosh;
 //Screen class
 function Screen(alwaysUpdate, alwaysDraw) {
 	//Copy properties
@@ -29,6 +29,7 @@ function Screen(alwaysUpdate, alwaysDraw) {
 	//Create a gui object
 	this.gui = new GUI(gInput);
 	this.addChild(this.gui);
+	
 }
 
 //Inherit Sprite properties
@@ -276,7 +277,6 @@ gameScreen.init = function() {
 	var yvel = 1;
 	
 	
-	
 	var scoreDisplay = new TextBox();
 	scoreDisplay.y = 10;
 	scoreDisplay.x = 10;
@@ -301,7 +301,7 @@ gameScreen.init = function() {
 	mySprite.update = function(d) {
 		scoreDisplay.text = "Score: "+score;
     	//console.log(score);
-		
+		whoosh = document.getElementById("whoosh");
 		//Define a speed
 		var speed = 2;
 
@@ -312,6 +312,7 @@ gameScreen.init = function() {
 			L2x -= speed;
 			R1x -= speed;
 			R2x -= speed;
+			whoosh.play();
 		}
 		//If the D key is pressed move to the right
 		if (gInput.right && this.x < canvas.width) {
