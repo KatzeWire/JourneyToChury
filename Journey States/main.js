@@ -242,7 +242,7 @@ Particle.prototype.update = function(d){
 
 function Comet(x, y){
     Sprite.call(this);
-    this.image = Textures.load("https://dl.dropboxusercontent.com/s/a7dktb3zfyoihbi/N8_LxXp1D9BFo0upe3HfGAcox8esF0a3POHO3w0QewgFs5FnqrvsoVRO5knWgLSFeyMThw%3Ds190.png?dl=0");
+    this.image = Textures.load("https://dl.dropboxusercontent.com/s/ol63b4jjfl666tc/Comet.png?dl=0");
     this.width = 50;
     this.height = 50;
     this.xoffset = -this.width/2;
