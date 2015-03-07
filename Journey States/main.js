@@ -457,7 +457,7 @@ mainMenu.init = function() {
 }
 var gameScreen = new Screen(false, true);
 //gameScreen.image = Textures.load("https://dl.dropboxusercontent.com/s/qvxjge9jodh6fej/BackgroundTEMP.png?dl=0");
-gameScreen.image = Textures.load("http://i.imgur.com/KZvRU3q.png");
+gameScreen.image = Textures.load("http://i.imgur.com/ydJ5UFx.png");
 
 //Set init properties
 gameScreen.init = function() {
