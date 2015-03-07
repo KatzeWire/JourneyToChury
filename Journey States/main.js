@@ -15,6 +15,12 @@ var wave = 0;
 //Level Counter
 var levels = 1;
 
+var xSpeed = 0;
+var ySpeed = 0;
+
+var cometCount;
+var newComet;
+
 //Screen class
 function Screen(alwaysUpdate, alwaysDraw) {
 	//Copy properties
@@ -178,6 +184,7 @@ Particle.prototype.update = function(d){
 			switch(wave){
 				case 3:		
 					getWave();
+					console.log("Called getWave()");
 					break;
 				default:
 					break;
@@ -262,30 +269,62 @@ Comet.prototype.update = function(d){
     //console.log(this.rotSpeed);
     this.rotation += this.rotSpeed;
     
-    console.log(this.x);
-    
+    //console.log(this.x);
+    this.x += xSpeed;
+    this.y += ySpeed;
     if(this.x > canvas.width-this.width/2){
-        this.x -= this.speed;
+        xSpeed = -xSpeed;
         //console.log(this.speed);
     }
     if(this.x < 0+this.width/2){
-        this.x += this.speed;
+        xSpeed = -xSpeed;
     }
     if(this.y > 250-this.width/2){
-        this.y -= this.speed;
+        ySpeed = -ySpeed;
     }
     if(this.y < 0+this.width/2){
-        this.y += this.speed;
+        ySpeed = -ySpeed;
     }
 	
 }
 
-function Level(s, w){ //speed, wave, parts[]
+function getLevel(levels){ //calls Level() based on what level you are on. CALLED IN: mySprite update
+	switch(levels){
+		case 1:
+			Level(4,3);
+			break;
+		case 2:
+			Level(2,6);
+			break;
+		case 3:
+			Level(2,12);
+			break;
+		case 4:
+			Level(3,6);
+			break;
+		case 5:
+			Level(3,12);
+			break;
+		case 6:
+			Level(4,6);
+			break;
+		default:
+			Level(4,12);
+			break;
+	}
+}
+
+function Level(s, w){ //speed, wave, parts[] CALLED IN: Init
 	//for(1 <= level <= 3){
 	//Particle.speed = s;
 	probeCounter = 1; //can't shoot a probe
+	cometCount = 0; //no comets on the canvas
+	//console.log(probeCounter);
 	//console.log(Particle.speed);
-	//initializing asteroid wave
+	xSpeed = s;
+	ySpeed = s;
+	
+	//initializing asteroid wave	
 	for(i=0; parts.length < numParts; i++){
        	var newPart = new Particle(canvas.width*Math.random(), 0, 20+25*Math.random(), s);
         newPart.rotSpeed = -maxRot+(2*maxRot)*Math.random();
@@ -345,7 +384,7 @@ function Level(s, w){ //speed, wave, parts[]
     	
 }
 
-function getWave(){
+function getWave(){ //CALLED IN: Particle update
 	//console.log(wave);
     //remove asteroids that are falling
 	//console.log(parts.length);
@@ -360,10 +399,13 @@ function getWave(){
     }
     //new comet spawn
     //var newComet = new Comet(Math.floor(Math.random() * -26) - 70, Math.floor(Math.random() * 20) - 70);
-    var newComet = new Comet(10,10);
+    newComet = new Comet(25, 25);
     newComet.rotSpeed = -maxRot+(2*maxRot)*Math.random();
     //console.log(newComet.x);
-    world.addChild(newComet);
+    if(cometCount == 0){
+    	world.addChild(newComet);
+    	cometCount++;
+    }
     //Allow shooting one probe
     probeCounter = 0;
     //if probe goes off the top of the screen
@@ -383,13 +425,16 @@ function getWave(){
     }*/
 }
 
-function endLevel(){
+function endLevel(newComet){ //CALLED IN: probe update (which is in init)
 	//if probe goes off top of the screeen
-	if(probe.y < 0+probe.offsetY){
+	//console.log("endLevel() called");
+	if(probe.y < 0+probe.width/2){
     	levels++;
     	wave = 0;
     	world.removeChild(newComet);
     	world.removeChild(probe);
+    	getLevel(levels);
+    	console.log("Probe off screen");
     	//break;
     }else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
     	levels++;
@@ -397,6 +442,8 @@ function endLevel(){
     	//score += 10;
     	world.removeChild(newComet);
     	world.removeChild(probe);
+    	getLevel(levels);
+    	console.log("Probe hits Comet");
     	//break;
     }
 }
@@ -528,6 +575,8 @@ gameScreen.init = function() {
 	
 	mySprite.update = function(d) {
 		scoreDisplay.text = "Score: "+score;
+		//level generation based on level number
+		//getLevel(levels);
     	//console.log(score);
 		
 		//Define a speed
@@ -692,7 +741,7 @@ gameScreen.init = function() {
 	//canvas.onmousedown = function(e){
 	function checkKey(e) {
 		e = e || window.event;
-		if (e.keyCode == '38') {//Up Arrow
+		if (e.keyCode == '38' && probeCounter == 0) {//Up Arrow
 			console.log("Up");
 			//var probe = new Sprite();
 			probe.width = 25;
@@ -704,32 +753,35 @@ gameScreen.init = function() {
 			probe.image = Textures.load("https://dl.dropboxusercontent.com/s/wedgo4jl8x0gufn/LLBFC3CDphNTeI9SunsZrdbYBv-fpCMsD8XNBUMlcC7OqkoHhAxBPHau42vRJQLUDo6sEg%3Ds190.png?dl=0");
 			//console.log("CREATED0");
 			//If the Up arrow is pressed, shoot probe
-			if (probeCounter == 0) {
+			console.log(probeCounter);
+			//if (probeCounter == 0) {
 				gameScreen.stage.addChild(probe);
-				probeCounter += 1;
-			}
+				probeCounter++;
+			//}
 			//console.log("CREATED1");
 			var proSpeed = 4;
 			//console.log("CREATED2");
-			probe.update = function(d) {
-				//console.log("UPDATING");
-				this.y -= proSpeed;
-				if (gInput.slow) { 
+			
+		}
+		probe.update = function(d) {
+			//console.log("UPDATING");
+			this.y -= proSpeed;
+			if (gInput.slow) { 
 					probe.y += 2;
 					//console.log("SLOWING");
-				}
-				/*if(probe.y < 0+probe.offsetY){
-				//if(probe.y < canvas.height/2){
-					gameScreen.stage.removeChild(probe);
-					
-    			}*/
-    			endLevel();
 			}
+			/*if(probe.y < 0+probe.offsetY){
+			//if(probe.y < canvas.height/2){
+				gameScreen.stage.removeChild(probe);
+					
+    		}*/
+    		endLevel(newComet);
 		}
 	}
 	
 	//level genteration based on level number
-	switch(levels){
+	getLevel(levels);
+	/*switch(levels){
 		case 1:
 			Level(4,3);
 			break;
@@ -751,33 +803,7 @@ gameScreen.init = function() {
 		default:
 			Level(4,12);
 			break;
-	}
-	
-	/*if(1 <= levels <= 2){
-		Level(4,5);
-		//console.log("level1");
-	}*/
-	/*while(2 < levels <= 4){
-		Level(1,10);
-	} 
-	while(4 < levels <= 6){
-		Level(2,6);
-	} 
-	while(6 < levels <= 8){
-		Level(2,12);
-	} 
-	while(8 < levels <= 10){
-		Level(3,6);
-	} 
-	while(10 < levels <= 12){
-		Level(3,12);
-	} 
-	while(12 < levels <= 14){
-		Level(4,6);
-	} 
-	while(levels > 14){
-		Level(4,12);
-	}*/
+	}*/	
 }
 
 //gameScreen's update function
