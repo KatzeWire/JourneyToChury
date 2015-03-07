@@ -117,7 +117,7 @@ world.addChild(screenMan);
 //Create a main menu screen
 var mainMenu = new Screen(false, false);
 //Optionally set a background for the screen
-mainMenu.image = Textures.load("https://dl.dropboxusercontent.com/s/qvxjge9jodh6fej/BackgroundTEMP.png?dl=0");
+mainMenu.image = Textures.load("Pics/title_screen.png");
 screenMan.push(mainMenu);
 
 //collision function
@@ -460,7 +460,7 @@ mainMenu.init = function() {
 	//Main menu sprites
 	var mmSprite = new Sprite();
 	mmSprite.x = canvas.width / 2;
-	mmSprite.y = canvas.height / 4;
+	mmSprite.y = 530;
 	mmSprite.width = 150;
 	mmSprite.height = 30;
 	mmSprite.xoffset = -mmSprite.width / 2;
@@ -623,7 +623,19 @@ gameScreen.init = function() {
 		if (gInput.rotR) {
 			this.rotation += 0.08;
 		}
-
+/**
+		if(rotTrack >= (Math.PI*2) || rotTrack <= -(Math.PI*2)){
+            rotTrack = 0;
+        }
+**/
+        /************************** ECH *************************/
+        /************ rotTrack is the radians counter btw *******/
+    /**    rotCirc(L1x, L1y, this.x, this.y, rotTrack);
+        rotCirc(L2x, L2y, this.x, this.y, rotTrack);
+        rotCirc(R1x, R1y, this.x, this.y, rotTrack);
+        rotCirc(R2x, R2y, this.x, this.y, rotTrack);
+		
+		**/
 		/*var resultTL = rotTracker(mySprite.x, mySprite.y, L1x, L1y, mySprite.rotation);
 		L1x = resultTL.x;
 		L1y = resultTL.y;
@@ -858,13 +870,13 @@ instructionsMenu.init = function() {
 	//Bg fills canvas
 	this.width = canvas.width;
 	this.height = canvas.height;
-
+	instructionsMenu.image = Textures.load("Pics/instruction screen.png");
 	this.gui.x = canvas.width / 2;
 	this.gui.y = canvas.height / 2;
 
 	var returnToMenu = new TextButton("Main Menu");
-	returnToMenu.y = 50;
-	returnToMenu.center = true;
+	returnToMenu.y = 200;
+	returnToMenu.x = 70;
 	returnToMenu.label.dropShadow = true;
 	returnToMenu.label.fontSize = 30;
 	returnToMenu.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
