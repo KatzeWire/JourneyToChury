@@ -330,58 +330,7 @@ function Level(s, w){ //speed, wave, parts[] CALLED IN: Init
         newPart.rotSpeed = -maxRot+(2*maxRot)*Math.random();
        	parts.push(newPart);
         world.addChild(newPart);
-    }
-    //console.log("Wave:" + wave);
-    /*if(wave > w){ //if this, call [below] as a function in particle update
-    	console.log(wave);
-    	//remove asteroids that are falling
-    	for(var i = 0; i < parts.length; i++){
-			if(parts[i].y > canvas.height-parts[i].yoffset){
-       		//if(parts[i].y > canvas.height/2){
-           		world.removeChild(parts[i]);
-           		parts.pop(parts[i]);
-           		//console.log("callcount");
-			}
-    	}
-    	//new comet spawn
-    	//var newComet = new Comet(Math.floor(Math.random() * -26) - 70, Math.floor(Math.random() * 20) - 70);
-    	var newComet = new Comet(25,25);
-    	newComet.rotSpeed = -maxRot+(2*maxRot)*Math.random();
-    	world.addChild(newComet);
-    	//Allow shooting one probe
-    	probeCounter = 0;
-    	//if probe goes off the top of the screen
-    	if(probe.x < 0+probe.offset){
-    		levels++;
-    		wave = 0;
-    		world.removeChild(newComet);
-    		world.removeChild(probe);
-    		//break;
-    	}else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
-    		levels++;
-    		wave = 0;
-    		score += 10;
-    		world.removeChild(newComet);
-    		world.removeChild(probe);
-    		//break;
-    	}
-    }*/
-        //if probe goes off the top of the screen
-    	/*if(probe.x < 0+probe.offset){
-    		levels++;
-    		wave = 0;
-    		world.removeChild(newComet);
-    		world.removeChild(probe);
-    		//break;
-    	}else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
-    		levels++;
-    		wave = 0;
-    		score += 10;
-    		world.removeChild(newComet);
-    		world.removeChild(probe);
-    		//break;
-    	}*/
-    	
+    }    	
 }
 
 function getWave(){ //CALLED IN: Particle update
@@ -391,8 +340,9 @@ function getWave(){ //CALLED IN: Particle update
     for(var i = 0; i < parts.length; i++){
     	//console.log(parts.length);
 		//if(parts[i].y > canvas.height-parts[i].yoffset){
-      		//if(parts[i].y > canvas.height/2){
+      	//if(parts[i].y > canvas.height/2){
     		world.removeChild(parts[i]);
+    		//deleteAll(parts[i]);
            	//parts.pop(parts[i]);  //try putting this in another for loop
            	//console.log("callcount");
 		//}
@@ -431,8 +381,10 @@ function endLevel(newComet){ //CALLED IN: probe update (which is in init)
 	if(probe.y < 0+probe.width/2){
     	levels++;
     	wave = 0;
-    	world.removeChild(newComet);
-    	world.removeChild(probe);
+    	//world.removeChild(newComet);
+    	//world.removeChild(probe);
+    	deleteAll(newComet);
+    	deleteAll(probe);
     	getLevel(levels);
     	console.log("Probe off screen");
     	//break;
@@ -440,12 +392,20 @@ function endLevel(newComet){ //CALLED IN: probe update (which is in init)
     	levels++;
     	wave = 0;
     	//score += 10;
-    	world.removeChild(newComet);
-    	world.removeChild(probe);
+    	//world.removeChild(newComet);
+    	//world.removeChild(probe);
+    	deleteAll(newComet);
+    	deleteAll(probe);
     	getLevel(levels);
     	console.log("Probe hits Comet");
     	//break;
     }
+}
+
+function deleteAll(sprite){ //CALLED IN endLevel() and getWave() ...not really working
+	while(sprite.exists){
+		world.removeChild(sprite);
+	}
 }
 
 //Set init properties
