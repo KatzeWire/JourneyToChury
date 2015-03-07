@@ -456,7 +456,8 @@ mainMenu.init = function() {
 
 }
 var gameScreen = new Screen(false, true);
-gameScreen.image = Textures.load("https://dl.dropboxusercontent.com/s/qvxjge9jodh6fej/BackgroundTEMP.png?dl=0");
+//gameScreen.image = Textures.load("https://dl.dropboxusercontent.com/s/qvxjge9jodh6fej/BackgroundTEMP.png?dl=0");
+gameScreen.image = Textures.load("http://i.imgur.com/KZvRU3q.png");
 
 //Set init properties
 gameScreen.init = function() {
@@ -534,6 +535,7 @@ gameScreen.init = function() {
     }*/
 	
 	mySprite.update = function(d) {
+		gameScreen.scrollY += .5;
 		scoreDisplay.text = "Score: "+score;
 		//level generation based on level number
 		//getLevel(levels);
@@ -565,6 +567,7 @@ gameScreen.init = function() {
 			L2y += speed;
 			R1y += speed;
 			R2y += speed;
+			gameScreen.scrollY -= speed/2;
 		}
 		//If the W key is pressed move up
 		if (gInput.up && this.y > 0) {
@@ -573,6 +576,7 @@ gameScreen.init = function() {
 			L2y -= speed;
 			R1y -= speed;
 			R2y -= speed;
+			gameScreen.scrollY += speed/2;
 		}
 
 		//rotation
