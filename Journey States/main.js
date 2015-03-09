@@ -621,9 +621,14 @@ gameScreen.init = function() {
 			/*if(cirOnCir(mySprite.x, mySprite.y,parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(L1x, L1y,parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(L2x, L2y,parts[i].x, parts[i].y, 15, parts[i].radius)
 			 || cirOnCir(R1x, R1y, parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(R2x, R2y, parts[i], parts[i].y, 15, parts[i].radius)){*/
 			if(cirOnCir(mySprite.x, mySprite.y,parts[i].x, parts[i].y, 15, parts[i].radius)){
-				mySprite.x = canvas.width/2;
-				mySprite.y = canvas.height - 100;
-				mySprite.rotation = 0;
+				screenMan.push(gameOver);
+				for(var i = 0; i < parts.length; i++){
+    				world.removeChild(parts[i]);
+    				world.removeChild(scoreDisplay);
+			    }
+				//mySprite.x = canvas.width/2;
+				//mySprite.y = canvas.height - 100;
+				//mySprite.rotation = 0;
 				//score--;
 				/*L1x = canvas.width/2 - 60;
 				L1y = canvas.height - 75;
@@ -851,6 +856,28 @@ instructionsMenu.init = function() {
 	}
 }
 
+var gameOver = new Screen(false, true);
+//Set init properties
+gameOver.init = function() {
+	//Bg fills canvas
+	this.width = canvas.width;
+	this.height = canvas.height;
+	gameOver.image = Textures.load("Pics/instruction screen.png");
+	this.gui.x = canvas.width / 2;
+	this.gui.y = canvas.height / 2;
+/*
+	var returnToMenu = new TextButton("Main Menu");
+	returnToMenu.y = 200;
+	returnToMenu.x = 70;
+	returnToMenu.label.dropShadow = true;
+	returnToMenu.label.fontSize = 30;
+	returnToMenu.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
+	this.gui.addChild(returnToMenu);
+	returnToMenu.func = function() {
+		screenMan.remove(instructionsMenu);
+		screenMan.remove(gameScreen);
+	}*/
+}
 /*gInput.addFunc(27, function() {
 	if (screenMan.screens.find(gameScreen) && !screenMan.screens.find(pauseMenu)) {
 		screenMan.push(pauseMenu);
