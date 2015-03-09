@@ -455,6 +455,20 @@ mainMenu.init = function() {
 	}
 
 }
+
+gameOver.init = function() {
+	//Bg fills canvas
+	this.width = canvas.width;
+	this.height = canvas.height;
+
+	this.gui.x = canvas.width / 2;
+	this.gui.y = canvas.height / 2;
+}
+
+var gameOver = new Screen(false, false);
+//Optionally set a background for the screen
+gameOver.image = Textures.load("Pics/title_screen.png");
+
 var gameScreen = new Screen(false, true);
 //gameScreen.image = Textures.load("https://dl.dropboxusercontent.com/s/qvxjge9jodh6fej/BackgroundTEMP.png?dl=0");
 gameScreen.image = Textures.load("http://i.imgur.com/ydJ5UFx.png");
