@@ -21,6 +21,8 @@ var ySpeed = 0;
 var cometCount;
 var newComet;
 
+var hitCount = 0;
+var hitTimer = 0;
 //Screen class
 function Screen(alwaysUpdate, alwaysDraw) {
 	//Copy properties
@@ -615,17 +617,21 @@ gameScreen.init = function() {
 		var resultBR = rotTracker(mySprite.x, mySprite.y, R2x, R2y, mySprite.rotation);
 		R2x = resultBR.x;
 		R2y = resultBR.y;*/
-
+		//while (hitTimer = 0){
 		for(i = 0; i < parts.length; i++){
 			//if (RectCircleColliding(parts[i], mySprite)) {
 			/*if(cirOnCir(mySprite.x, mySprite.y,parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(L1x, L1y,parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(L2x, L2y,parts[i].x, parts[i].y, 15, parts[i].radius)
 			 || cirOnCir(R1x, R1y, parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(R2x, R2y, parts[i], parts[i].y, 15, parts[i].radius)){*/
 			if(cirOnCir(mySprite.x, mySprite.y,parts[i].x, parts[i].y, 15, parts[i].radius)){
-				screenMan.push(gameOver);
-				for(var i = 0; i < parts.length; i++){
-    				world.removeChild(parts[i]);
-    				world.removeChild(scoreDisplay);
+				hitCount++;
+				if (hitCount = 3) {
+					screenMan.push(gameOver);
+					for(var i = 0; i < parts.length; i++){
+    					world.removeChild(parts[i]);
+    					world.removeChild(scoreDisplay);
+			   		}
 			    }
+			   
 				//mySprite.x = canvas.width/2;
 				//mySprite.y = canvas.height - 100;
 				//mySprite.rotation = 0;
@@ -641,6 +647,7 @@ gameScreen.init = function() {
 				//console.log("hit")
 			}
 		}
+		//}
 	}
 	
 	/*function cirOnCir(c1x, c1y, c2x, c2y, c1r, c2r) {
