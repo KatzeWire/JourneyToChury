@@ -17,6 +17,7 @@ var levels = 1;
 
 var xSpeed = 0;
 var ySpeed = 0;
+var proSpeed = 4;
 
 var cometCount;
 var newComet;
@@ -768,7 +769,7 @@ gameScreen.init = function() {
 			probe.height = 25;
 			probe.x = mySprite.x;
 			probe.y = mySprite.y;
-			probe.xoffsetn = -probe.width / 2;
+			probe.xoffset = -probe.width / 2;
 			probe.yoffset = -probe.height / 2;
 			probe.image = Textures.load("https://dl.dropboxusercontent.com/s/wedgo4jl8x0gufn/LLBFC3CDphNTeI9SunsZrdbYBv-fpCMsD8XNBUMlcC7OqkoHhAxBPHau42vRJQLUDo6sEg%3Ds190.png?dl=0");
 			//console.log("CREATED0");
@@ -779,7 +780,6 @@ gameScreen.init = function() {
 				probeCounter++;
 			//}
 			//console.log("CREATED1");
-			var proSpeed = 4;
 			//console.log("CREATED2");
 			
 		}
