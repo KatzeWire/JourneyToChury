@@ -181,7 +181,8 @@ Particle.prototype.update = function(d){
     }     
     //callWave(wave,levels);
     /**Ongoing waves needs callLevel() not callWave()**/
-    callLevel(wave,levels);
+    //callLevel(wave,levels);
+    
 }
 
 function Comet(x, y){
@@ -400,6 +401,27 @@ function callLevel(wave, levels){ //CALLED IN: Particle update (instead of callW
 				default:
 					break;
 			}
+	}
+}
+
+function speedPlus(wave){
+	switch(wave){
+		case 1:
+			
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		default:
+			Level(4); //speed:4 & wave:12
+			break;
 	}
 }
 
