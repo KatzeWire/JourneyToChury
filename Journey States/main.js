@@ -736,7 +736,7 @@ gameScreen.init = function() {
 			probe.height = 25;
 			probe.x = mySprite.x;
 			probe.y = mySprite.y;
-			probe.xoffset = -probe.width / 2;
+			probe.xoffsetn = -probe.width / 2;
 			probe.yoffset = -probe.height / 2;
 			probe.image = Textures.load("https://dl.dropboxusercontent.com/s/wedgo4jl8x0gufn/LLBFC3CDphNTeI9SunsZrdbYBv-fpCMsD8XNBUMlcC7OqkoHhAxBPHau42vRJQLUDo6sEg%3Ds190.png?dl=0");
 			//console.log("CREATED0");
@@ -751,22 +751,30 @@ gameScreen.init = function() {
 			//console.log("CREATED2");
 			
 		}
-		probe.update = function(d) {
+		/*probe.update = function(d){
+			this.y -= proSpeed;
+			console.log("probe update");
+			endLevel(newComet);
+		}*/
+
+	}
+	
+	probe.update = function(d) {
 			//console.log("UPDATING");
 			this.y -= proSpeed;
-			if (gInput.slow) { 
+			/*if (gInput.slow) { 
 					probe.y += 2;
 					//console.log("SLOWING");
-			}
+			}*/
 			/*if(probe.y < 0+probe.offsetY){
 			//if(probe.y < canvas.height/2){
 				gameScreen.stage.removeChild(probe);
 					
     		}*/
+    		console.log("probe update");
     		endLevel(newComet);
-		}
 	}
-	
+		
 	//level genteration based on level number
 	getLevel(levels);
 	/*switch(levels){
