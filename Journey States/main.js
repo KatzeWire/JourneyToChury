@@ -469,13 +469,25 @@ gameScreen.init = function() {
 
 	//Create a new Sprite
 	var mySprite = new Sprite();
-
+	var L1 = new Sprite();
+	var	L2 = new Sprite();
+	var	R1 = new Sprite();
+	var	R2 = new Sprite();
 	//Set its dimensions
 	mySprite.width = 150;
 	mySprite.height = 30;
-	//Sideways sprite dimensions
-	//mySprite.width = 30;
-	//mySprite.height = 150;	
+	
+	L1.width = 30;
+	L1.height = 30;
+	
+	L2.width = 30;
+	L2.height = 30;
+	
+	R1.width = 30;
+	R1.height = 30;
+	
+	R2.width = 30;
+	R2.height = 30;
 
 	//Shift the sprite so that its origin is at its center
 	mySprite.xoffset = -mySprite.width / 2;
@@ -483,14 +495,46 @@ gameScreen.init = function() {
 	mySprite.x = canvas.width / 2;
 	mySprite.y = canvas.height - 75;
 	mySprite.radius = 15;
+	
+	L1.xoffset = (-L1.width / 2)-60;
+	L1.yoffset = -L1.height / 2;
+	L1.x = canvas.width / 2;
+	L1.y = canvas.height - 75;
+	L1.radius = 15;
+	L1.rotation = 0;
+	
+	L2.xoffset = (-L2.width / 2) - 30;
+	L2.yoffset = -L2.height / 2;
+	L2.x = canvas.width / 2;
+	L2.y = canvas.height - 75;
+	L2.radius = 15;
+	
+	R1.xoffset = (-R1.width / 2) + 60;
+	R1.yoffset = -R1.height / 2;
+	R1.x = canvas.width / 2;
+	R1.y = canvas.height - 75;
+	R1.radius = 15;
+	
+	R2.xoffset = (-R2.width / 2) + 30;
+	R2.yoffset = -R2.height / 2;
+	R2.x = canvas.width / 2;
+	R2.y = canvas.height - 75;
+	R2.radius = 15;
 
 	//Set the sprite's texture
 	mySprite.image = Textures.load("https://dl.dropboxusercontent.com/s/5bvs7oc3o3mz8vq/u9AH7s9j3DP9cbdUwyYZX_hCLtZCOtRfzTMoBAJX2Eu84DOja8sCT1gm54VIuekhPLDmIA%3Dw1246-h582.png?dl=0");
 	//sideways sprite texture
 	//mySprite.image = Textures.load("https://dl.dropboxusercontent.com/s/d8rraa2m1v5lhoh/Side%20Satellite.png?dl=0");
-
+	L1.image = Textures.load("Pics/CircleBB.png");
+	L2.image = Textures.load("Pics/CircleBB.png");
+	R1.image = Textures.load("Pics/CircleBB.png");
+	R2.image = Textures.load("Pics/CircleBB.png");
 	//Add the sprite to the world
 	this.stage.addChild(mySprite);
+	this.stage.addChild(L1);
+	this.stage.addChild(L2);
+	this.stage.addChild(R1);
+	this.stage.addChild(R2);
 
 	//A
 	gInput.addBool(65, "left");
@@ -525,17 +569,6 @@ gameScreen.init = function() {
 	//scoreDisplay.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
 	world.addChild(scoreDisplay);
 	
-	/*if(this.y > canvas.height-this.yoffset){
-        score++;
-        console.log(score);
-        scoreDisplay.text = "Score: "+score;
-    }*/
-    
-    /*scoreDisplay.text.update = function(d){
-    	scoreDisplay.text = "Score: "+score;
-    	console.log(score);
-    }*/
-	
 	mySprite.update = function(d) {
 		gameScreen.scrollY += .5;
 		scoreDisplay.text = "Score: "+score;
@@ -549,45 +582,53 @@ gameScreen.init = function() {
 		//If the A key is pressed move to the left
 		if (gInput.left && this.x > 0) {
 			this.x -= speed;
-			L1x -= speed;
-			L2x -= speed;
-			R1x -= speed;
-			R2x -= speed;
+			L1.x -= speed;
+			L2.x -= speed;
+			R1.x -= speed;
+			R2.x -= speed;
 		}
 		//If the D key is pressed move to the right
 		if (gInput.right && this.x < canvas.width) {
 			this.x += speed;
-			L1x += speed;
-			L2x += speed;
-			R1x += speed;
-			R2x += speed;
+			L1.x += speed;
+			L2.x += speed;
+			R1.x += speed;
+			R2.x += speed;
 		}
 		//If the S key is pressed move down
 		if (gInput.down && this.y < canvas.height) {
 			this.y += speed;
-			L1y += speed;
-			L2y += speed;
-			R1y += speed;
-			R2y += speed;
+			L1.y += speed;
+			L2.y += speed;
+			R1.y += speed;
+			R2.y += speed;
 			gameScreen.scrollY -= speed/2;
 		}
 		//If the W key is pressed move up
 		if (gInput.up && this.y > 0) {
 			this.y -= speed;
-			L1y -= speed;
-			L2y -= speed;
-			R1y -= speed;
-			R2y -= speed;
+			L1.y -= speed;
+			L2.y -= speed;
+			R1.y -= speed;
+			R2.y -= speed;
 			gameScreen.scrollY += speed/2;
 		}
 
 		//rotation
 		if (gInput.rotL) {
 			this.rotation -= 0.08;
+			L1.rotation -= 0.08;
+			L2.rotation -= 0.08;
+			R1.rotation -= 0.08;
+			R2.rotation -= 0.08;
 		}
 
 		if (gInput.rotR) {
 			this.rotation += 0.08;
+			L1.rotation += 0.08;
+			L2.rotation += 0.08;
+			R1.rotation += 0.08;
+			R2.rotation += 0.08;
 		}
 /**
 		if(rotTrack >= (Math.PI*2) || rotTrack <= -(Math.PI*2)){
@@ -617,7 +658,7 @@ gameScreen.init = function() {
 		var resultBR = rotTracker(mySprite.x, mySprite.y, R2x, R2y, mySprite.rotation);
 		R2x = resultBR.x;
 		R2y = resultBR.y;*/
-		//while (hitTimer = 0){
+		//if (hitTimer = 0){
 		for(i = 0; i < parts.length; i++){
 			//if (RectCircleColliding(parts[i], mySprite)) {
 			/*if(cirOnCir(mySprite.x, mySprite.y,parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(L1x, L1y,parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(L2x, L2y,parts[i].x, parts[i].y, 15, parts[i].radius)
@@ -658,14 +699,6 @@ gameScreen.init = function() {
 		return (dx * dx + dy * dy <= dist * dist)
 	}*/
 	
-	var L1x = canvas.width/2 - 60;
-	var	L1y = canvas.height - 75;
-	var	L2x = canvas.width/2 - 30;
-	var	L2y = canvas.height - 75;
-	var	R1x = canvas.width/2 + 60;
-	var	R1y = canvas.height - 75;
-	var	R2x = canvas.width/2 + 30;
-	var	R2y = canvas.height - 75;
 	
 	/*function rotTracker(centerX, centerY, pointX, pointY, angle){
 		var x = Math.round((Math.cos(angle) * (pointX - centerX)) - (Math.sin(angle) * (pointY - centerY)) + centerX);
@@ -802,19 +835,6 @@ gameScreen.init = function() {
 	}*/	
 }
 
-//gameScreen's update function
-//gameScreen.update = function() {
-    //deleting astroid wave out of bounds
-    /*for(var i = 0; i < parts.length; i++){
-        if(parts[i].y > canvas.height/2){
-            world.removeChild(parts[i]);
-            parts.pop(parts[i]);
-            console.log("callcount");
-
-        }
-    }
-    world.updateChildren(d);*/
-//}
 
 /*var pauseMenu = new Screen(false, true);
 //Set init properties
@@ -880,61 +900,11 @@ gameOver.init = function() {
 	gameOver.image = Textures.load("Pics/instruction screen.png");
 	this.gui.x = canvas.width / 2;
 	this.gui.y = canvas.height / 2;
-/*
-	var returnToMenu = new TextButton("Main Menu");
-	returnToMenu.y = 200;
-	returnToMenu.x = 70;
-	returnToMenu.label.dropShadow = true;
-	returnToMenu.label.fontSize = 30;
-	returnToMenu.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
-	this.gui.addChild(returnToMenu);
-	returnToMenu.func = function() {
-		screenMan.remove(instructionsMenu);
-		screenMan.remove(gameScreen);
-	}*/
+
 }
 /*gInput.addFunc(27, function() {
 	if (screenMan.screens.find(gameScreen) && !screenMan.screens.find(pauseMenu)) {
 		screenMan.push(pauseMenu);
-	}
-}*/
-
-
-
-/*function shooting(checkKey){
- 	document.onkeydown = checkKey;
- 	var probeCounter = 0;
- 	//canvas.onmousedown = function(e){
- 	function checkKey(e){
- 		e = e || window.event;
- 		if(e.keyCode == '38'){ //Up Arrow
-			console.log("Up");
-			var probe = new Sprite();
-			probe.width = 50;
-			probe.height = 26;
-			probe.x = mySprite.x;
-			probe.y = mySprite.y;
-			probe.xoffset = -probe.width/2;
-			probe.yoffset = -probe.height/2;
-			probe.image = Textures.load("https://dl.dropboxusercontent.com/s/yg9d8rdfs4bmggj/Probe.png?dl=0");
-			//console.log("CREATED0");
-			//If the Up arrow is pressed, shoot probe
-			if(probeCounter == 0){
-				gameScreen.stage.addChild(probe);
-				probeCounter += 1;
-			}
-			//console.log("CREATED1");
-			var proSpeed = 4;
-			//console.log("CREATED2");
-			probe.update = function(d){
-				console.log("UPDATING");
-				this.y -= proSpeed;
-				if(gInput.slow){
-					probe.y += 2;
-					console.log("SLOWING");
-				}
-			}
-		}
 	}
 }*/
 
