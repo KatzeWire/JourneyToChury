@@ -496,28 +496,27 @@ gameScreen.init = function() {
 	mySprite.y = canvas.height - 75;
 	mySprite.radius = 15;
 	
-	L1.xoffset = (-L1.width / 2)-60;
+	L1.xoffset = -L1.width / 2;
 	L1.yoffset = -L1.height / 2;
-	L1.x = canvas.width / 2;
+	L1.x = (canvas.width / 2) - 60;
 	L1.y = canvas.height - 75;
 	L1.radius = 15;
-	L1.rotation = 0;
 	
-	L2.xoffset = (-L2.width / 2) - 30;
+	L2.xoffset = -L2.width / 2;
 	L2.yoffset = -L2.height / 2;
-	L2.x = canvas.width / 2;
+	L2.x = (canvas.width / 2) - 30;
 	L2.y = canvas.height - 75;
 	L2.radius = 15;
 	
-	R1.xoffset = (-R1.width / 2) + 60;
+	R1.xoffset = -R1.width / 2;
 	R1.yoffset = -R1.height / 2;
-	R1.x = canvas.width / 2;
+	R1.x = (canvas.width / 2) + 60;
 	R1.y = canvas.height - 75;
 	R1.radius = 15;
 	
-	R2.xoffset = (-R2.width / 2) + 30;
+	R2.xoffset = -R2.width / 2;
 	R2.yoffset = -R2.height / 2;
-	R2.x = canvas.width / 2;
+	R2.x = (canvas.width / 2) + 30;
 	R2.y = canvas.height - 75;
 	R2.radius = 15;
 
