@@ -650,84 +650,84 @@ gameScreen.init = function() {
 	function collision (x, y, centerX, centerY, distance, theta){
 		if(x > centerX && y > centerY){
 			if(gInput.rotL){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY + (distance*Math.cos(theta));
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
 			}
 			else if(gInput.rotR){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY - (distance*Math.cos(theta));
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
 			}
 		}
 		else if(x > centerX && y < centerY){
 			if(gInput.rotL){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.cos(theta));
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
 			}
 			else if(gInput.rotR){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.cos(theta));
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
 			}
 		}
 		else if(x < centerX && y > centerY){
 			if(gInput.rotL){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.cos(theta));
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
 			}
 			else if(gInput.rotR){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.cos(theta));
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
 			}
 		}
 		else if(x < centerX && y < centerY){
 			if(gInput.rotL){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY - (distance*Math.cos(theta));
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
 			}
 			else if(gInput.rotR){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY + (distance*Math.cos(theta));
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
 			}
 		}
 		else if(x == centerX && y > centerY){
 			if(gInput.rotL){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.cos(theta));
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
 			}
 			else if(gInput.rotR){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY - (distance*Math.cos(theta));
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
 			}
 		}
 		else if(x == centerX && y < centerY){
 			if(gInput.rotL){
 				x = centerX - (distance*Math.cos(theta));
-				y = centerY + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
 			}
 			else if(gInput.rotR){
 				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
 			}
 		}
 		else if(x > centerX && y == centerY){
 			if(gInput.rotL){
 				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
 			}
 			else if(gInput.rotR){
 				x = centerX - (distance*Math.cos(theta));
-				y = centerY + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
 			}
 		}
 		else if(x < centerX && y == centerY){
 			if(gInput.rotL){
 				console.log("l");
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY + (distance*Math.cos(theta));
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
 			}
 			else if(gInput.rotR){
 				console.log("l");
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.cos(theta));
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
 			}
 		}
 		console.log(x);
@@ -736,7 +736,7 @@ gameScreen.init = function() {
 	}
 	
 	L2.update = function(d){
-		var L2array = collision(this.x, this.y, mySprite.x, mySprite.y, 30, mySprite.rotation)
+		var L2array = collision(this.x, this.y, mySprite.x, mySprite.y, -30, mySprite.rotation)
 		this.x = L2array[0];
 		this.y = L2array[1];
 	}
