@@ -630,39 +630,10 @@ gameScreen.init = function() {
 			R1.rotation += 0.08;
 			R2.rotation += 0.08;
 		}
-/**
-		if(rotTrack >= (Math.PI*2) || rotTrack <= -(Math.PI*2)){
-            rotTrack = 0;
-        }
-**/
-        /************************** ECH *************************/
-        /************ rotTrack is the radians counter btw *******/
-    /**    rotCirc(L1x, L1y, this.x, this.y, rotTrack);
-        rotCirc(L2x, L2y, this.x, this.y, rotTrack);
-        rotCirc(R1x, R1y, this.x, this.y, rotTrack);
-        rotCirc(R2x, R2y, this.x, this.y, rotTrack);
 		
-		**/
-		/*var resultTL = rotTracker(mySprite.x, mySprite.y, L1x, L1y, mySprite.rotation);
-		L1x = resultTL.x;
-		L1y = resultTL.y;
 		
-		var resultTR = rotTracker(mySprite.x, mySprite.y, R1x, R1y, mySprite.rotation);
-		R1x = resultTR.x;
-		R1y = resultTL.y;
-		
-		var resultBL = rotTracker(mySprite.x, mySprite.y, L2x, L2y, mySprite.rotation);
-		L2x = resultBL.x;
-		L2y = resultBL.y;
-		
-		var resultBR = rotTracker(mySprite.x, mySprite.y, R2x, R2y, mySprite.rotation);
-		R2x = resultBR.x;
-		R2y = resultBR.y;*/
-		//if (hitTimer = 0){
+
 		for(i = 0; i < parts.length; i++){
-			//if (RectCircleColliding(parts[i], mySprite)) {
-			/*if(cirOnCir(mySprite.x, mySprite.y,parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(L1x, L1y,parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(L2x, L2y,parts[i].x, parts[i].y, 15, parts[i].radius)
-			 || cirOnCir(R1x, R1y, parts[i].x, parts[i].y, 15, parts[i].radius) || cirOnCir(R2x, R2y, parts[i], parts[i].y, 15, parts[i].radius)){*/
 			if(cirOnCir(mySprite.x, mySprite.y,parts[i].x, parts[i].y, 15, parts[i].radius)){
 				hitCount++;
 				if (hitCount = 3) {
@@ -672,94 +643,107 @@ gameScreen.init = function() {
     					world.removeChild(scoreDisplay);
 			   		}
 			    }
-			   
-				//mySprite.x = canvas.width/2;
-				//mySprite.y = canvas.height - 100;
-				//mySprite.rotation = 0;
-				//score--;
-				/*L1x = canvas.width/2 - 60;
-				L1y = canvas.height - 75;
-				L2x = canvas.width/2 - 30;
-				L2y = canvas.height - 75;
-				R1x = canvas.width/2 + 60;
-				R1y = canvas.height - 75;
-				R2x = canvas.width/2 + 30;
-				R2y = canvas.height - 75;*/
-				//console.log("hit")
 			}
 		}
-		//}
 	}
 	
-	/*function cirOnCir(c1x, c1y, c2x, c2y, c1r, c2r) {
-		var dx = c1x - c2x;
-		var dy = c1y - c2y;
-		var dist = c1r + c2r;
- 
-		return (dx * dx + dy * dy <= dist * dist)
-	}*/
-	
-	
-	/*function rotTracker(centerX, centerY, pointX, pointY, angle){
-		var x = Math.round((Math.cos(angle) * (pointX - centerX)) - (Math.sin(angle) * (pointY - centerY)) + centerX);
-		var y = Math.round((Math.sin(angle) * (pointX - centerX)) - (Math.cos(angle) * (pointY - centerY)) + centerY);
-		return {"x":x, "y":y};
-		//console.log("rot"+x);
-	}
-	
-        var distX = Math.abs(circle.x - ax-rect.width/2);
-        var distY = Math.abs(circle.y - ay-rect.height/2);
-//        console.log(circle.y);
-
-        if (distX > (rect.width/2 + circle.radius)) { return false; }
-        if (distY > (rect.height/2 + circle.radius)) { return false; }
-
-        if (distX <= (rect.width/2)) { return true; } 
-        if (distY <= (rect.height/2)) { return true; }
-
-        var zx=distX-rect.width/2;
-        var zy=distY-rect.height/2;
-        /*var testy = false;
-        if(zx*zx+zy*zy<=(circle.radius*circle.radius)){
-        	testy = true;
-        }else{
-        	testy = false;
-        }
-        console.log(testy);
-        return (zx*zx+zy*zy<=(circle.radius*circle.radius));
-    }*/
-	
-	//initializing asteroid wave
-	/*for(i=0; parts.length < numParts; i++){
-        //var newPart = new Particle(canvas.width*Math.random(), 0, 30);
-        //var newPart = new Particle(canvas.width*Math.random(), canvas.height/3*Math.random(), 20+25*Math.random());
-        var newPart = new Particle(canvas.width*Math.random(), 0, 20+25*Math.random());
-        newPart.rotSpeed = -maxRot+(2*maxRot)*Math.random();
-        parts.push(newPart);
-        world.addChild(newPart); 
-    }*/
-    
-    /*
-    
-	
-	/*parts.update = function(){
-		for(var i = 0; i < parts.length; i++){
-        	if(parts[i].y > canvas.height/2){
-            	world.removeChild(parts[i]);
-            	parts.pop(parts[i]);
-            	console.log("callcount");
+	function collision (x, y, centerX, centerY, distance, theta){
+		if(x > centerX && y > centerY){
+			if(gInput.rotL){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.cos(theta));
 			}
-        }
-	}*/
+			else if(gInput.rotR){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.cos(theta));
+			}
+		}
+		else if(x > centerX && y < centerY){
+			if(gInput.rotL){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.cos(theta));
+			}
+			else if(gInput.rotR){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.cos(theta));
+			}
+		}
+		else if(x < centerX && y > centerY){
+			if(gInput.rotL){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.cos(theta));
+			}
+			else if(gInput.rotR){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.cos(theta));
+			}
+		}
+		else if(x < centerX && y < centerY){
+			if(gInput.rotL){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.cos(theta));
+			}
+			else if(gInput.rotR){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.cos(theta));
+			}
+		}
+		else if(x == centerX && y > centerY){
+			if(gInput.rotL){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.cos(theta));
+			}
+			else if(gInput.rotR){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.cos(theta));
+			}
+		}
+		else if(x == centerX && y < centerY){
+			if(gInput.rotL){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.cos(theta));
+			}
+			else if(gInput.rotR){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.cos(theta));
+			}
+		}
+		else if(x > centerX && y == centerY){
+			if(gInput.rotL){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.cos(theta));
+			}
+			else if(gInput.rotR){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.cos(theta));
+			}
+		}
+		else if(x < centerX && y == centerY){
+			if(gInput.rotL){
+				console.log("l");
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.cos(theta));
+			}
+			else if(gInput.rotR){
+				console.log("l");
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.cos(theta));
+			}
+		}
+		console.log(x);
+		var array = [x,y];
+		return array;
+	}
 	
-	/*document.onkeydown = checkKey;
-	var probeCounter = 0;
-	checkKey(e.keyCode == '38');*/
-	//shooting();
-
+	L2.update = function(d){
+		var L2array = collision(this.x, this.y, mySprite.x, mySprite.y, 30, mySprite.rotation)
+		this.x = L2array[0];
+		this.y = L2array[1];
+	}
+	
+	
+	
 	document.onkeydown = checkKey;
-	//var probeCounter = 0;
-	//canvas.onmousedown = function(e){
 	function checkKey(e) {
 		e = e || window.event;
 		if (e.keyCode == '38' && probeCounter == 0) {//Up Arrow
@@ -772,100 +756,25 @@ gameScreen.init = function() {
 			probe.xoffset = -probe.width / 2;
 			probe.yoffset = -probe.height / 2;
 			probe.image = Textures.load("https://dl.dropboxusercontent.com/s/wedgo4jl8x0gufn/LLBFC3CDphNTeI9SunsZrdbYBv-fpCMsD8XNBUMlcC7OqkoHhAxBPHau42vRJQLUDo6sEg%3Ds190.png?dl=0");
-			//console.log("CREATED0");
 			//If the Up arrow is pressed, shoot probe
 			console.log(probeCounter);
-			//if (probeCounter == 0) {
-				gameScreen.stage.addChild(probe);
-				probeCounter++;
-			//}
-			//console.log("CREATED1");
-			//console.log("CREATED2");
+			gameScreen.stage.addChild(probe);
+			probeCounter++;
 			
 		}
-		/*probe.update = function(d){
-			this.y -= proSpeed;
-			console.log("probe update");
-			endLevel(newComet);
-		}*/
-
+		
 	}
 	
 	probe.update = function(d) {
-			//console.log("UPDATING");
 			this.y -= proSpeed;
-			/*if (gInput.slow) { 
-					probe.y += 2;
-					//console.log("SLOWING");
-			}*/
-			/*if(probe.y < 0+probe.offsetY){
-			//if(probe.y < canvas.height/2){
-				gameScreen.stage.removeChild(probe);
-					
-    		}*/
     		console.log("probe update");
     		endLevel(newComet);
 	}
 		
 	//level genteration based on level number
 	getLevel(levels);
-	/*switch(levels){
-		case 1:
-			Level(4,3);
-			break;
-		case 2:
-			Level(2,6);
-			break;
-		case 3:
-			Level(2,12);
-			break;
-		case 4:
-			Level(3,6);
-			break;
-		case 5:
-			Level(3,12);
-			break;
-		case 6:
-			Level(4,6);
-			break;
-		default:
-			Level(4,12);
-			break;
-	}*/	
 }
 
-
-/*var pauseMenu = new Screen(false, true);
-//Set init properties
-pauseMenu.init = function() {
-	//Bg fills canvas
-	this.width = canvas.width;
-	this.height = canvas.height;
-
-	this.gui.x = canvas.width / 2;
-	this.gui.y = canvas.height / 2;
-
-	var resumeGame = new TextButton("Resume Game");
-	resumeGame.center = true;
-	resumeGame.label.dropShadow = true;
-	resumeGame.label.fontSize = 30;
-	resumeGame.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
-	this.gui.addChild(resumeGame);
-	resumeGame.func = function() {
-		screenMan.remove(pauseMenu);
-	}
-	var returnToMenu = new TextButton("Main Menu");
-	returnToMenu.y = 50;
-	returnToMenu.center = true;
-	returnToMenu.label.dropShadow = true;
-	returnToMenu.label.fontSize = 30;
-	returnToMenu.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
-	this.gui.addChild(returnToMenu);
-	returnToMenu.func = function() {
-		screenMan.remove(pauseMenu);
-		screenMan.remove(gameScreen);
-	}
-}*/
 
 var instructionsMenu = new Screen(false, true);
 //Set init properties
@@ -901,10 +810,5 @@ gameOver.init = function() {
 	this.gui.y = canvas.height / 2;
 
 }
-/*gInput.addFunc(27, function() {
-	if (screenMan.screens.find(gameScreen) && !screenMan.screens.find(pauseMenu)) {
-		screenMan.push(pauseMenu);
-	}
-}*/
 
 ;
