@@ -648,46 +648,46 @@ gameScreen.init = function() {
 	}
 	
 	function collision (x, y, centerX, centerY, distance, theta){
-		if(x > centerX && y > centerY){ //Q4
-			if(gInput.rotL){
+		//if(x > centerX && y > centerY){ //Q4
+			//if(gInput.rotL){
 				x = centerX + (distance*Math.cos(theta));
 				y = centerY + (distance*Math.sin(theta));
-				console.log("Q4 rotL");
-			}
+				//console.log("Q4 rotL");
+			/*}
 			else if(gInput.rotR){
 				x = centerX + (distance*Math.cos(theta));
 				y = centerY + (distance*Math.sin(theta));
-				console.log("Q4 rotR");
+				//console.log("Q4 rotR");
 			}
 		}
 		else if(x > centerX && y < centerY){ //Q1
 			if(gInput.rotL){
 				x = centerX + (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
+				y = centerY + (distance*Math.sin(theta));
 				console.log("Q1 rotL");
 			}
 			else if(gInput.rotR){
-				x = centerX + (distance*Math.cos(theta));
+				x = centerX - (distance*Math.cos(theta));
 				y = centerY - (distance*Math.sin(theta));
 				console.log("Q1 rotR");
 			}
 		}
 		else if(x < centerX && y > centerY){ //Q3
 			if(gInput.rotL){
-				x = centerX - (distance*Math.cos(theta));
+				x = centerX + (distance*Math.cos(theta));
 				y = centerY + (distance*Math.sin(theta));
 				console.log("Q3 rotL");
 			}
 			else if(gInput.rotR){
 				x = centerX - (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
+				y = centerY - (distance*Math.sin(theta));
 				console.log("Q3 rotR");
 			}
 		}
 		else if(x < centerX && y < centerY){ //Q2
 			if(gInput.rotL){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
 				console.log("Q2 rotL");
 			}
 			else if(gInput.rotR){
@@ -745,10 +745,16 @@ gameScreen.init = function() {
 				y = centerY - (distance*Math.sin(theta));
 				console.log("left rotR");
 			}
-		}
+		}*/
 		//console.log(x);
 		var array = [x,y];
 		return array;
+	}
+	
+	L1.update = function(d){
+		var L1array = collision(this.x, this.y, mySprite.x, mySprite.y, -60, mySprite.rotation)
+		this.x = L1array[0];
+		this.y = L1array[1];
 	}
 	
 	L2.update = function(d){
@@ -757,6 +763,17 @@ gameScreen.init = function() {
 		this.y = L2array[1];
 	}
 	
+	R1.update = function(d){
+		var R1array = collision(this.x, this.y, mySprite.x, mySprite.y, 30, mySprite.rotation)
+		this.x = R1array[0];
+		this.y = R1array[1];
+	}
+	
+	R2.update = function(d){
+		var R2array = collision(this.x, this.y, mySprite.x, mySprite.y, 60, mySprite.rotation)
+		this.x = R2array[0];
+		this.y = R2array[1];
+	}
 	
 	
 	document.onkeydown = checkKey;
