@@ -648,89 +648,105 @@ gameScreen.init = function() {
 	}
 	
 	function collision (x, y, centerX, centerY, distance, theta){
-		if(x > centerX && y > centerY){
+		if(x > centerX && y > centerY){ //Q4
 			if(gInput.rotL){
 				x = centerX + (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
-			}
-			else if(gInput.rotR){
-				x = centerX - (distance*Math.cos(theta));
 				y = centerY + (distance*Math.sin(theta));
-			}
-		}
-		else if(x > centerX && y < centerY){
-			if(gInput.rotL){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
+				console.log("Q4 rotL");
 			}
 			else if(gInput.rotR){
 				x = centerX + (distance*Math.cos(theta));
 				y = centerY + (distance*Math.sin(theta));
+				console.log("Q4 rotR");
 			}
 		}
-		else if(x < centerX && y > centerY){
+		else if(x > centerX && y < centerY){ //Q1
 			if(gInput.rotL){
 				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
-			}
-			else if(gInput.rotR){
-				x = centerX - (distance*Math.cos(theta));
 				y = centerY - (distance*Math.sin(theta));
-			}
-		}
-		else if(x < centerX && y < centerY){
-			if(gInput.rotL){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
+				console.log("Q1 rotL");
 			}
 			else if(gInput.rotR){
 				x = centerX + (distance*Math.cos(theta));
 				y = centerY - (distance*Math.sin(theta));
+				console.log("Q1 rotR");
 			}
 		}
-		else if(x == centerX && y > centerY){
-			if(gInput.rotL){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
-			}
-			else if(gInput.rotR){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
-			}
-		}
-		else if(x == centerX && y < centerY){
+		else if(x < centerX && y > centerY){ //Q3
 			if(gInput.rotL){
 				x = centerX - (distance*Math.cos(theta));
 				y = centerY + (distance*Math.sin(theta));
-			}
-			else if(gInput.rotR){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
-			}
-		}
-		else if(x > centerX && y == centerY){
-			if(gInput.rotL){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
+				console.log("Q3 rotL");
 			}
 			else if(gInput.rotR){
 				x = centerX - (distance*Math.cos(theta));
 				y = centerY + (distance*Math.sin(theta));
+				console.log("Q3 rotR");
 			}
 		}
-		else if(x < centerX && y == centerY){
+		else if(x < centerX && y < centerY){ //Q2
 			if(gInput.rotL){
-				console.log("l");
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("Q2 rotL");
 			}
 			else if(gInput.rotR){
-				console.log("l");
-				x = centerX + (distance*Math.cos(theta));
+				x = centerX - (distance*Math.cos(theta));
 				y = centerY - (distance*Math.sin(theta));
+				console.log("Q2 rotR");
 			}
 		}
-		console.log(x);
+		else if(x == centerX && y > centerY){ //down
+			if(gInput.rotL){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("down rotL");
+			}
+			else if(gInput.rotR){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("down rotR");
+			}
+		}
+		else if(x == centerX && y < centerY){ //up
+			if(gInput.rotL){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("up rotL");
+			}
+			else if(gInput.rotR){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("up rotR");
+			}
+		}
+		else if(x > centerX && y == centerY){ //right
+			if(gInput.rotL){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("right rotL");
+			}
+			else if(gInput.rotR){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("right rotR");
+			}
+		}
+		else if(x < centerX && y == centerY){ //left
+			if(gInput.rotL){
+				//console.log("l");
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("left rotL");
+			}
+			else if(gInput.rotR){
+				//console.log("l");
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("left rotR");
+			}
+		}
+		//console.log(x);
 		var array = [x,y];
 		return array;
 	}
