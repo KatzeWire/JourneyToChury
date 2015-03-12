@@ -654,7 +654,7 @@ gameScreen.init = function() {
 			gameScreen.scrollY -= speed/2;
 		}
 		//If the W key is pressed move up
-		if (gInput.up && this.y > 0) {
+		if (gInput.up && this.y > 450) {
 			this.y -= speed;
 			L1.y -= speed;
 			L2.y -= speed;
