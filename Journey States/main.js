@@ -276,17 +276,21 @@ Particle.prototype.update = function(d){
 		c++;
 		//console.log(c);
 		if(c%numParts == 0){
+			this.speed += 0.2;
 			score++;
 			wave++;
     		//console.log(wave);
 		}
     } 
     //callWave();
-    increaseWave();
-    if(wave == 9){
+    //increaseWave();
+    if(wave == 23){ //23 is good for this
+    	for(var i = 0; i < parts.length; i++){
+    		world.removeChild(parts[i]);
+    	}
     	getWave();
     }     
-	console.log("wave "+ wave + " has speed " + Particle.speed);
+	//console.log("wave "+ wave + " has speed " + Particle.speed);
 }
 
 function Comet(x, y){
@@ -294,6 +298,7 @@ function Comet(x, y){
     this.image = Textures.load("Pics/comet.png");
     this.width = 50;
     this.height = 50;
+    this.radius = 25;
     this.xoffset = -this.width/2;
     this.yoffset = -this.height/2;
     
@@ -387,16 +392,13 @@ function getWave(){ //CALLED IN: Particle update
 	//console.log(wave);
     //remove asteroids that are falling
 	//console.log(parts.length);
-    for(var i = 0; i < parts.length; i++){
+    /*for(var i = 0; i < parts.length; i++){
     	//console.log(parts.length);
-		//if(parts[i].y > canvas.height-parts[i].yoffset){
-      	//if(parts[i].y > canvas.height/2){
-    		world.removeChild(parts[i]);
-    		//deleteAll(parts[i]);
-           	//parts.pop(parts[i]);  //try putting this in another for loop
-           	//console.log("callcount");
-		//}
-    }
+    	world.removeChild(parts[i]);
+    	//deleteAll(parts[i]);
+        //parts.pop(parts[i]);  //try putting this in another for loop
+        //console.log("callcount");
+    }*/
     //new comet spawn
     //var newComet = new Comet(Math.floor(Math.random() * -26) - 70, Math.floor(Math.random() * 20) - 70);
     newComet = new Comet(25, 25);
@@ -432,22 +434,22 @@ function endLevel(){ //CALLED IN: probe update (which is in init)
 		screenMan.push(win1);
     	levels++;
     	wave = 0;
-    	//world.removeChild(newComet);
-    	//world.removeChild(probe);
-    	deleteAll(newComet);
-    	deleteAll(probe);
+    	world.removeChild(newComet);
+    	world.removeChild(probe);
+    	//deleteAll(newComet);
+    	//deleteAll(probe);
     	getLevel(levels);
     	console.log("Probe off screen");
     	//break;
-    }else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
+    }else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, 25)){ //if probe hits the comet
     	screenMan.push(win2);
     	levels++;
     	wave = 0;
-    	//score += 10;
-    	//world.removeChild(newComet);
-    	//world.removeChild(probe);
-    	deleteAll(newComet);
-    	deleteAll(probe);
+    	score += 10;
+    	world.removeChild(newComet);
+    	world.removeChild(probe);
+    	//deleteAll(newComet);
+    	//deleteAll(probe);
     	getLevel(levels);
     	console.log("Probe hits Comet");
     	//break;
@@ -606,7 +608,8 @@ gameScreen.init = function() {
 	var xvel = 1;
 	var yvel = 1;
 	
-	
+	/** initialize the waves **/
+	Level(2,4);
 	
 	var scoreDisplay = new TextBox();
 	scoreDisplay.y = 10;
@@ -654,7 +657,7 @@ gameScreen.init = function() {
 			gameScreen.scrollY -= speed/2;
 		}
 		//If the W key is pressed move up
-		if (gInput.up && this.y > 450) {
+		if (gInput.up && this.y > 350) {
 			this.y -= speed;
 			L1.y -= speed;
 			L2.y -= speed;
@@ -833,7 +836,7 @@ gameScreen.init = function() {
 	function checkKey(e) {
 		e = e || window.event;
 		if (e.keyCode == '38' && probeCounter == 0) {//Up Arrow
-			console.log("Up");
+			//console.log("Up");
 			//var probe = new Sprite();
 			probe.width = 25;
 			probe.height = 25;
@@ -843,7 +846,7 @@ gameScreen.init = function() {
 			probe.yoffset = -probe.height / 2;
 			probe.image = Textures.load("Pics/philae_flip.png");
 			//If the Up arrow is pressed, shoot probe
-			console.log(probeCounter);
+			//console.log(probeCounter);
 			gameScreen.stage.addChild(probe);
 			probeCounter++;
 			
@@ -853,12 +856,12 @@ gameScreen.init = function() {
 	
 	probe.update = function(d) {
 			this.y -= proSpeed;
-    		console.log("probe update");
+    		//console.log("probe update");
     		endLevel();
 	}
 		
 	//level genteration based on level number
-	getLevel(levels);
+	//getLevel(levels);
 }
 
 

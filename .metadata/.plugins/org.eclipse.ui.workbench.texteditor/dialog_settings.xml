@@ -2,18 +2,19 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="instr" key="selection"/>
+		<item value="newcomet" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="newcomet"/>
+			<item value="newcomet.radius"/>
+			<item value="getlevel"/>
 			<item value="instr"/>
 			<item value="b2poly"/>
 			<item value="xDif"/>
 			<item value="hitbox"/>
 			<item value="1zAq"/>
-			<item value="mySp"/>
-			<item value="backgr"/>
 		</list>
 	</section>
 </section>
