@@ -234,7 +234,7 @@ function increaseWave(){ //CALLED IN: Particle Update
 //asteroid initliazation function
 function Particle(x, y, size,speed){
     Sprite.call(this);
-    this.image = Textures.load("https://dl.dropboxusercontent.com/s/a7dktb3zfyoihbi/N8_LxXp1D9BFo0upe3HfGAcox8esF0a3POHO3w0QewgFs5FnqrvsoVRO5knWgLSFeyMThw%3Ds190.png?dl=0");
+    this.image = Textures.load("Pics/asteroid.png");
     this.width = size;
     this.height = size;
     this.xoffset = -this.width/2;
@@ -291,7 +291,7 @@ Particle.prototype.update = function(d){
 
 function Comet(x, y){
     Sprite.call(this);
-    this.image = Textures.load("https://dl.dropboxusercontent.com/s/ol63b4jjfl666tc/Comet.png?dl=0");
+    this.image = Textures.load("Pics/comet.png");
     this.width = 50;
     this.height = 50;
     this.xoffset = -this.width/2;
@@ -477,7 +477,7 @@ mainMenu.init = function() {
 	mmSprite.height = 30;
 	mmSprite.xoffset = -mmSprite.width / 2;
 	mmSprite.yoffset = -mmSprite.height / 2;
-	mmSprite.image = Textures.load("https://dl.dropboxusercontent.com/s/5bvs7oc3o3mz8vq/u9AH7s9j3DP9cbdUwyYZX_hCLtZCOtRfzTMoBAJX2Eu84DOja8sCT1gm54VIuekhPLDmIA%3Dw1246-h582.png?dl=0");
+	mmSprite.image = Textures.load("Pics/Rosetta.png");
 	mmSprite.update = function(d) {
 		mmSprite.rotation += 0.01;
 	}
@@ -571,7 +571,7 @@ gameScreen.init = function() {
 	R2.radius = 15;
 
 	//Set the sprite's texture
-	mySprite.image = Textures.load("https://dl.dropboxusercontent.com/s/5bvs7oc3o3mz8vq/u9AH7s9j3DP9cbdUwyYZX_hCLtZCOtRfzTMoBAJX2Eu84DOja8sCT1gm54VIuekhPLDmIA%3Dw1246-h582.png?dl=0");
+	mySprite.image = Textures.load("Pics/Rosetta.png");
 	//sideways sprite texture
 	//mySprite.image = Textures.load("https://dl.dropboxusercontent.com/s/d8rraa2m1v5lhoh/Side%20Satellite.png?dl=0");
 	/*L1.image = Textures.load("Pics/CircleBB.png");
@@ -841,7 +841,7 @@ gameScreen.init = function() {
 			probe.y = mySprite.y;
 			probe.xoffset = -probe.width / 2;
 			probe.yoffset = -probe.height / 2;
-			probe.image = Textures.load("https://dl.dropboxusercontent.com/s/wedgo4jl8x0gufn/LLBFC3CDphNTeI9SunsZrdbYBv-fpCMsD8XNBUMlcC7OqkoHhAxBPHau42vRJQLUDo6sEg%3Ds190.png?dl=0");
+			probe.image = Textures.load("Pics/philae_flip.png");
 			//If the Up arrow is pressed, shoot probe
 			console.log(probeCounter);
 			gameScreen.stage.addChild(probe);
@@ -891,7 +891,7 @@ gameOver.init = function() {
 	//Bg fills canvas
 	this.width = canvas.width;
 	this.height = canvas.height;
-	gameOver.image = Textures.load("Pics/instruction screen.png");
+	gameOver.image = Textures.load("Pics/game over screen.png");
 	this.gui.x = canvas.width / 2;
 	this.gui.y = canvas.height / 2;
 
@@ -903,7 +903,7 @@ win1.init = function() {
 	//Bg fills canvas
 	this.width = canvas.width;
 	this.height = canvas.height;
-	win1.image = Textures.load("Pics/instruction screen.png");
+	win1.image = Textures.load("Pics/winning screen2.png");
 	this.gui.x = canvas.width / 2;
 	this.gui.y = canvas.height / 2;
 
@@ -915,7 +915,7 @@ win2.init = function() {
 	//Bg fills canvas
 	this.width = canvas.width;
 	this.height = canvas.height;
-	win2.image = Textures.load("Pics/instruction screen.png");
+	win2.image = Textures.load("Pics/winning screen2.png");
 	this.gui.x = canvas.width / 2;
 	this.gui.y = canvas.height / 2;
 
