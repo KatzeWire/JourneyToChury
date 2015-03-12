@@ -574,10 +574,10 @@ gameScreen.init = function() {
 	mySprite.image = Textures.load("https://dl.dropboxusercontent.com/s/5bvs7oc3o3mz8vq/u9AH7s9j3DP9cbdUwyYZX_hCLtZCOtRfzTMoBAJX2Eu84DOja8sCT1gm54VIuekhPLDmIA%3Dw1246-h582.png?dl=0");
 	//sideways sprite texture
 	//mySprite.image = Textures.load("https://dl.dropboxusercontent.com/s/d8rraa2m1v5lhoh/Side%20Satellite.png?dl=0");
-	L1.image = Textures.load("Pics/CircleBB.png");
+	/*L1.image = Textures.load("Pics/CircleBB.png");
 	L2.image = Textures.load("Pics/CircleBB.png");
 	R1.image = Textures.load("Pics/CircleBB.png");
-	R2.image = Textures.load("Pics/CircleBB.png");
+	R2.image = Textures.load("Pics/CircleBB.png");*/
 	//Add the sprite to the world
 	this.stage.addChild(mySprite);
 	this.stage.addChild(L1);
