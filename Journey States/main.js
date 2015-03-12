@@ -132,56 +132,7 @@ function cirOnCir(c1x, c1y, c2x, c2y, c1r, c2r) {
 	return (dx * dx + dy * dy <= dist * dist)
 }
 
-//asteroid initliazation function
-function Particle(x, y, size,speed){
-    Sprite.call(this);
-    this.image = Textures.load("https://dl.dropboxusercontent.com/s/a7dktb3zfyoihbi/N8_LxXp1D9BFo0upe3HfGAcox8esF0a3POHO3w0QewgFs5FnqrvsoVRO5knWgLSFeyMThw%3Ds190.png?dl=0");
-    this.width = size;
-    this.height = size;
-    this.xoffset = -this.width/2;
-    this.yoffset = -this.height/2;
-    
-    this.x = x;
-    this.y = y;
-    
-//    this.blendFunc = BLEND_ADD; 
-//    this.life = 0;
-    //this.vel = new Vector(0,0);
-    this.rotSpeed = 0;
-    this.radius = size/2;
-    this.speed = speed;
-}
-
-Particle.prototype = new Sprite();
-
-//asteroid particle system update
-Particle.prototype.update = function(d){
-    this.y += this.speed; //originally was 1, 4 is very fast
-    //console.log(this.speed);
-    
-    //console.log(this.rotSpeed);
-    this.rotation += this.rotSpeed;
-    
-	/*for(var i = 0; i < parts.length; i++){
-		if(parts[i].y > canvas.height-parts[i].yoffset){
-       	//if(parts[i].y > canvas.height/2){
-           	world.removeChild(parts[i]);
-           	//parts.pop(parts[i]);
-           	console.log("callcount");
-		}
-    }*/
- 
-    if(this.y > canvas.height-this.yoffset){
-        this.x = canvas.width*Math.random();
-        this.y = this.yoffset;
-		c++;
-		//console.log(c);
-		if(c%numParts == 0){
-			score++;
-			wave++;
-    		//console.log(wave);
-		}
-    }        
+function callWave(){ //CALLED IN: Particle update
 	switch(levels){
 		case 1:
 			switch(wave){
@@ -243,6 +194,101 @@ Particle.prototype.update = function(d){
 	}
 }
 
+function increaseWave(){ //CALLED IN: Particle Update
+	switch(wave){
+		case 0:
+			Particle.speed = 1;
+			//console.log("wave 0 (s:1) has speed"+ Particle.speed);
+			break;
+		case 1:
+			Particle.speed = 1;
+			//console.log("wave 1 (s:1) has speed"+ Particle.speed);
+			break;
+		case 2:
+			//console.log("wave 2 (s:1.5) has speed"+ Particle.speed);
+			Particle.speed = 1.5;
+			break;
+		case 3:
+			Particle.speed = 2;
+			//console.log("wave 3 (s:2) has speed"+ Particle.speed);
+			break;
+		case 4:
+			Particle.speed = 2.5;
+			//console.log("wave 4 (s:2.5) has speed"+ Particle.speed);
+			break;
+		case 5:
+			Particle.speed = 3;
+			//console.log("wave 5 (s:3) has speed"+ Particle.speed);
+			break;
+		case 6:
+			Particle.speed = 3.5;
+			//console.log("wave 6 (s:3.5) has speed"+ Particle.speed);
+			break;
+		default:
+			Particle.speed = 4;
+			//console.log("wave DEFAULT (s:4) has speed"+ Particle.speed);
+			break;
+	}
+}
+
+//asteroid initliazation function
+function Particle(x, y, size,speed){
+    Sprite.call(this);
+    this.image = Textures.load("https://dl.dropboxusercontent.com/s/a7dktb3zfyoihbi/N8_LxXp1D9BFo0upe3HfGAcox8esF0a3POHO3w0QewgFs5FnqrvsoVRO5knWgLSFeyMThw%3Ds190.png?dl=0");
+    this.width = size;
+    this.height = size;
+    this.xoffset = -this.width/2;
+    this.yoffset = -this.height/2;
+    
+    this.x = x;
+    this.y = y;
+    
+//    this.blendFunc = BLEND_ADD; 
+//    this.life = 0;
+    //this.vel = new Vector(0,0);
+    this.rotSpeed = 0;
+    this.radius = size/2;
+    this.speed = speed;
+}
+
+Particle.prototype = new Sprite();
+
+//asteroid particle system update
+Particle.prototype.update = function(d){
+    this.y += this.speed; //originally was 1, 4 is very fast
+    //console.log(this.speed);
+    
+    //console.log(this.rotSpeed);
+    this.rotation += this.rotSpeed;
+    
+	/*for(var i = 0; i < parts.length; i++){
+		if(parts[i].y > canvas.height-parts[i].yoffset){
+       	//if(parts[i].y > canvas.height/2){
+           	world.removeChild(parts[i]);
+           	//parts.pop(parts[i]);
+           	console.log("callcount");
+		}
+    }*/
+ 
+    if(this.y > canvas.height-this.yoffset){
+        this.x = canvas.width*Math.random();
+        this.y = this.yoffset;
+		c++;
+		//console.log(c);
+		if(c%numParts == 0){
+			score++;
+			wave++;
+    		//console.log(wave);
+		}
+    } 
+    //callWave();
+    increaseWave();
+    if(wave == 9){
+    	getWave();
+    }     
+	console.log("wave "+ wave + " has speed " + Particle.speed);
+}
+
 function Comet(x, y){
     Sprite.call(this);
     this.image = Textures.load("https://dl.dropboxusercontent.com/s/ol63b4jjfl666tc/Comet.png?dl=0");
@@ -295,6 +341,7 @@ function getLevel(levels){ //calls Level() based on what level you are on. CALLE
 	switch(levels){
 		case 1:
 			Level(4,3);
+			console.log("start speed="+ Particle.speed);
 			break;
 		case 2:
 			Level(2,6);
@@ -378,7 +425,7 @@ function getWave(){ //CALLED IN: Particle update
     }*/
 }
 
-function endLevel(newComet){ //CALLED IN: probe update (which is in init)
+function endLevel(){ //CALLED IN: probe update (which is in init)
 	//if probe goes off top of the screeen
 	//console.log("endLevel() called");
 	if(probe.y < 0+probe.width/2){
@@ -634,14 +681,18 @@ gameScreen.init = function() {
 		
 
 		for(i = 0; i < parts.length; i++){
-			if(cirOnCir(mySprite.x, mySprite.y,parts[i].x, parts[i].y, 15, parts[i].radius)){
+			if(cirOnCir(mySprite.x, mySprite.y,parts[i].x, parts[i].y, 15, parts[i].radius) 
+			|| cirOnCir(L1.x, L1.y,parts[i].x, parts[i].y, 15, parts[i].radius)
+			|| cirOnCir(L2.x, L2.y,parts[i].x, parts[i].y, 15, parts[i].radius)
+			|| cirOnCir(R1.x, R1.y,parts[i].x, parts[i].y, 15, parts[i].radius)
+			|| cirOnCir(R2.x, R2.y,parts[i].x, parts[i].y, 15, parts[i].radius)){
 				hitCount++;
 				if (hitCount = 3) {
 					screenMan.push(gameOver);
 					for(var i = 0; i < parts.length; i++){
     					world.removeChild(parts[i]);
-    					world.removeChild(scoreDisplay);
 			   		}
+			   		world.removeChild(scoreDisplay);
 			    }
 			}
 		}
@@ -801,7 +852,7 @@ gameScreen.init = function() {
 	probe.update = function(d) {
 			this.y -= proSpeed;
     		console.log("probe update");
-    		endLevel(newComet);
+    		endLevel();
 	}
 		
 	//level genteration based on level number
