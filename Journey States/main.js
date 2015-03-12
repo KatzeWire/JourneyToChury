@@ -429,6 +429,7 @@ function endLevel(){ //CALLED IN: probe update (which is in init)
 	//if probe goes off top of the screeen
 	//console.log("endLevel() called");
 	if(probe.y < 0+probe.width/2){
+		screenMan.push(win1);
     	levels++;
     	wave = 0;
     	//world.removeChild(newComet);
@@ -439,6 +440,7 @@ function endLevel(){ //CALLED IN: probe update (which is in init)
     	console.log("Probe off screen");
     	//break;
     }else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
+    	screenMan.push(win2);
     	levels++;
     	wave = 0;
     	//score += 10;
@@ -890,6 +892,30 @@ gameOver.init = function() {
 	this.width = canvas.width;
 	this.height = canvas.height;
 	gameOver.image = Textures.load("Pics/instruction screen.png");
+	this.gui.x = canvas.width / 2;
+	this.gui.y = canvas.height / 2;
+
+}
+
+var win1 = new Screen(false, true);
+//Set init properties
+win1.init = function() {
+	//Bg fills canvas
+	this.width = canvas.width;
+	this.height = canvas.height;
+	win1.image = Textures.load("Pics/instruction screen.png");
+	this.gui.x = canvas.width / 2;
+	this.gui.y = canvas.height / 2;
+
+}
+
+var win2 = new Screen(false, true);
+//Set init properties
+win2.init = function() {
+	//Bg fills canvas
+	this.width = canvas.width;
+	this.height = canvas.height;
+	win2.image = Textures.load("Pics/instruction screen.png");
 	this.gui.x = canvas.width / 2;
 	this.gui.y = canvas.height / 2;
 
