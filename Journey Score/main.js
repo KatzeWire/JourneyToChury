@@ -990,7 +990,7 @@ gameOver.init = function() {
 	//Bg fills canvas
 	this.width = canvas.width;
 	this.height = canvas.height;
-	gameOver.image = Textures.load("Pics/game over screen.png");
+	gameOver.image = Textures.load("Pics/game over.png");
 	this.gui.x = canvas.width / 2;
 	this.gui.y = canvas.height / 2;
 
@@ -1002,7 +1002,7 @@ win1.init = function() {
 	//Bg fills canvas
 	this.width = canvas.width;
 	this.height = canvas.height;
-	win1.image = Textures.load("Pics/winning screen2.png");
+	win1.image = Textures.load("Pics/almost.png");
 	this.gui.x = canvas.width / 2;
 	this.gui.y = canvas.height / 2;
 
@@ -1014,7 +1014,7 @@ win2.init = function() {
 	//Bg fills canvas
 	this.width = canvas.width;
 	this.height = canvas.height;
-	win2.image = Textures.load("Pics/winning screen2.png");
+	win2.image = Textures.load("Pics/winning.png");
 	this.gui.x = canvas.width / 2;
 	this.gui.y = canvas.height / 2;
 
