@@ -26,6 +26,8 @@ var newComet;
 
 var hitCount = 0;
 var hitTimer = 0;
+
+var waveCount = 2;
 //Screen class
 function Screen(alwaysUpdate, alwaysDraw) {
 	//Copy properties
@@ -286,7 +288,7 @@ Particle.prototype.update = function(d){
     } 
     //callWave();
     //increaseWave();
-    if(wave == 23){ //23 is good for this
+    if(wave == waveCount){ //23 is good for this
     	for(var i = 0; i < parts.length; i++){
     		parts[i].x = canvas.width*Math.random();
         	parts[i].y = this.yoffset;
@@ -399,7 +401,7 @@ Mineral.prototype.update = function(d){
     } 
     //callWave();
     //increaseWave();
-    if(wave == 23){ //23 is good for this
+    if(wave == waveCount){ //23 is good for this
     	for(var i = 0; i < mineral.length; i++){
     		mineral[i].x = canvas.width*Math.random();
         	mineral[i].y = this.yoffset;
