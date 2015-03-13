@@ -288,6 +288,8 @@ Particle.prototype.update = function(d){
     //increaseWave();
     if(wave == 23){ //23 is good for this
     	for(var i = 0; i < parts.length; i++){
+    		parts[i].x = canvas.width*Math.random();
+        	parts[i].y = this.yoffset;
     		world.removeChild(parts[i]);
     	}
     	getWave();
@@ -399,7 +401,10 @@ Mineral.prototype.update = function(d){
     //increaseWave();
     if(wave == 23){ //23 is good for this
     	for(var i = 0; i < mineral.length; i++){
+    		mineral[i].x = canvas.width*Math.random();
+        	mineral[i].y = this.yoffset;
     		world.removeChild(mineral[i]);
+    		
     	}
     }
 }
@@ -557,7 +562,7 @@ mainMenu.init = function() {
 	}
 	mainMenu.stage.addChild(mmSprite);
 
-	var newGame = new TextButton("New Game");
+	var newGame = new TextButton("Start Game");
 	newGame.center = true;
 	newGame.label.dropShadow = true;
 	newGame.label.fontSize = 30;
@@ -686,7 +691,7 @@ gameScreen.init = function() {
 	
 	var scoreDisplay = new TextBox();
 	scoreDisplay.y = 10;
-	scoreDisplay.x = 10;
+	scoreDisplay.x = 365;
 	scoreDisplay.fontSize = 30;
 	scoreDisplay.drawBG = true;
 	scoreDisplay.text = "Score: " +score;
@@ -773,11 +778,11 @@ gameScreen.init = function() {
 					screenMan.push(gameOver);
 					for(var i = 0; i < parts.length; i++){
     					world.removeChild(parts[i]);
-			   		}
-			   		for(var i = 0; i < mineral.length; i++){
     					world.removeChild(mineral[i]);
-    				}
-			   		world.removeChild(scoreDisplay);
+			   		}
+			   		//for(var i = 0; i < mineral.length; i++){
+    					//world.removeChild(mineral[i]);
+    				//}
 			    }
 			}
 		}
@@ -793,7 +798,9 @@ gameScreen.init = function() {
 					score++;
 				}
 				mineral[i].score++;
-				world.removeChild(mineral[i]);
+				mineral[i].x = canvas.width*Math.random();
+   			    mineral[i].y = this.yoffset;
+   			    mineral[i].score = 0;
 				//mineral.pop(mineral[i]);
 			}
 		}

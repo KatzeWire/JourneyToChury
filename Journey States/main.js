@@ -10,6 +10,8 @@ var parts = [];
 //Score
 var score = 0;
 var c = 0; //score counter
+var mineral = [];
+var mineParts = 5;
 //Wave Counter
 var wave = 0;
 //Level Counter
@@ -277,7 +279,7 @@ Particle.prototype.update = function(d){
 		//console.log(c);
 		if(c%numParts == 0){
 			this.speed += 0.2;
-			score++;
+			//score++;
 			wave++;
     		//console.log(wave);
 		}
@@ -286,6 +288,8 @@ Particle.prototype.update = function(d){
     //increaseWave();
     if(wave == 23){ //23 is good for this
     	for(var i = 0; i < parts.length; i++){
+    		parts[i].x = canvas.width*Math.random();
+        	parts[i].y = this.yoffset;
     		world.removeChild(parts[i]);
     	}
     	getWave();
@@ -342,6 +346,69 @@ Comet.prototype.update = function(d){
 	
 }
 
+//asteroid initialization
+function Mineral(x, y, size, speed){
+    Sprite.call(this);
+    this.image = Textures.load("Pics/mineral.png");
+    this.width = size;
+    this.height = size;
+    this.xoffset = -this.width/2;
+    this.yoffset = -this.height/2;
+    
+    this.x = x;
+    this.y = y;
+    
+//    this.blendFunc = BLEND_ADD; 
+//    this.life = 0;
+    //this.vel = new Vector(0,0);
+    this.rotSpeed = 0;
+    this.radius = size/2;
+    this.speed = speed;
+    this.score = 0;
+}
+
+Mineral.prototype = new Sprite()
+
+//mineral update
+Mineral.prototype.update = function(d){
+    this.y += this.speed; //originally was 1, 4 is very fast
+    //console.log(this.speed);
+    
+    //console.log(this.rotSpeed);
+    this.rotation += this.rotSpeed;
+    
+	/*for(var i = 0; i < parts.length; i++){
+		if(parts[i].y > canvas.height-parts[i].yoffset){
+       	//if(parts[i].y > canvas.height/2){
+           	world.removeChild(parts[i]);
+           	//parts.pop(parts[i]);
+           	console.log("callcount");
+		}
+    }*/
+ 
+    if(this.y > canvas.height-this.yoffset){
+        this.x = canvas.width*Math.random();
+        this.y = this.yoffset;
+		c++;
+		//console.log(c);
+		if(c%numParts == 0){
+			this.speed += 0.2;
+			//score++;
+			//wave++;
+		}
+    } 
+    //callWave();
+    //increaseWave();
+    if(wave == 23){ //23 is good for this
+    	for(var i = 0; i < mineral.length; i++){
+    		mineral[i].x = canvas.width*Math.random();
+        	mineral[i].y = this.yoffset;
+    		world.removeChild(mineral[i]);
+    		
+    	}
+    }
+}
+
 function getLevel(levels){ //calls Level() based on what level you are on. CALLED IN: mySprite update
 	switch(levels){
 		case 1:
@@ -367,6 +434,16 @@ function getLevel(levels){ //calls Level() based on what level you are on. CALLE
 			Level(4,12);
 			break;
 	}
+}
+
+function Minerals(s){ //s = speed CALLED IN: Init
+	//initializing mineral wave	
+	for(i=0; mineral.length < mineParts; i++){
+       	var newMine = new Mineral(canvas.width*Math.random(), -canvas.height*Math.random(), 3+10*Math.random(), s);
+        newMine.rotSpeed = -maxRot+(2*maxRot)*Math.random();
+       	mineral.push(newMine);
+        world.addChild(newMine);
+    }    	
 }
 
 function Level(s, w){ //speed, wave, parts[] CALLED IN: Init
@@ -611,6 +688,7 @@ gameScreen.init = function() {
 	/** initialize the waves **/
 	Level(2,4);
 	
+	
 	var scoreDisplay = new TextBox();
 	scoreDisplay.y = 10;
 	scoreDisplay.x = 10;
@@ -627,10 +705,14 @@ gameScreen.init = function() {
 		//level generation based on level number
 		//getLevel(levels);
     	//console.log(score);
+		if (wave == 0 && parts[0].y > 100){
+			Minerals(2);
+			console.log("Call Minerals()");
+		}
 		
 		//Define a speed
 		var speed = 2;
-
+		
 		//If the A key is pressed move to the left
 		if (gInput.left && this.x > 0) {
 			this.x -= speed;
@@ -684,7 +766,7 @@ gameScreen.init = function() {
 		}
 		
 		
-
+		//Rosetta collision
 		for(i = 0; i < parts.length; i++){
 			if(cirOnCir(mySprite.x, mySprite.y,parts[i].x, parts[i].y, 15, parts[i].radius) 
 			|| cirOnCir(L1.x, L1.y,parts[i].x, parts[i].y, 15, parts[i].radius)
@@ -699,6 +781,22 @@ gameScreen.init = function() {
 			   		}
 			   		world.removeChild(scoreDisplay);
 			    }
+			}
+		}
+		
+		for(i = 0; i < mineral.length; i++){
+			if(cirOnCir(mySprite.x, mySprite.y,mineral[i].x, mineral[i].y, 15, mineral[i].radius) 
+			|| cirOnCir(L1.x, L1.y,mineral[i].x, mineral[i].y, 15, mineral[i].radius)
+			|| cirOnCir(L2.x, L2.y,mineral[i].x, mineral[i].y, 15, mineral[i].radius)
+			|| cirOnCir(R1.x, R1.y,mineral[i].x, mineral[i].y, 15, mineral[i].radius)
+			|| cirOnCir(R2.x, R2.y,mineral[i].x, mineral[i].y, 15, mineral[i].radius)){
+				if(mineral[i].score == 0){
+					score++;
+				}
+				mineral[i].score++;
+				mineral[i].x = canvas.width*Math.random();
+   			    mineral[i].y = this.yoffset;
+				//mineral.pop(mineral[i]);
 			}
 		}
 	}
