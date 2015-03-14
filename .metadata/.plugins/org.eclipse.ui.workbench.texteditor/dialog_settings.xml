@@ -2,19 +2,19 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="probe" key="selection"/>
+		<item value="xsp" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="xsp"/>
+			<item value="scoreDisplay"/>
+			<item value="scored"/>
 			<item value="probe"/>
 			<item value="parts"/>
 			<item value="getW"/>
 			<item value="newc"/>
 			<item value="new"/>
-			<item value="cir"/>
-			<item value="endl"/>
-			<item value="0.08"/>
 		</list>
 	</section>
 </section>

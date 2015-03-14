@@ -18,8 +18,8 @@ var maxWaves = 23;
 //Level Counter
 var levels = 1;
 
-var xSpeed = 0;
-var ySpeed = 0;
+var xSpeed = 2;
+var ySpeed = 2;
 var proSpeed = 4;
 
 var cometCount;
@@ -473,8 +473,7 @@ function Level(s, w){ //speed, wave CALLED IN: Init
 	cometCount = 0; //no comets on the canvas
 	//console.log(probeCounter);
 	//console.log(Particle.speed);
-	xSpeed = s;
-	ySpeed = s;
+	
 	
 	//initializing asteroid wave	
 	for(i=0; parts.length < numParts; i++){
@@ -699,7 +698,7 @@ gameScreen.init = function() {
 	//Up Arrow
 	gInput.addBool(38, "shoot");
 	//Down Arrow
-	gInput.addBool(40, "slow");
+	gInput.addBool(80, "cheat");
 
 	//The sprite's x and y velocities
 	var xvel = 1;
@@ -719,9 +718,20 @@ gameScreen.init = function() {
 	//scoreDisplay.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
 	world.addChild(scoreDisplay);
 	
+	var waveCounter = new TextBox();
+	waveCounter.y = 50;
+	waveCounter.x = 385;
+	waveCounter.fontSize = 15;
+	waveCounter.drawBG = true;
+	waveCounter.text = "Wave: " +wave+ "/"+maxWaves;
+	waveCounter.bgColor = "white";
+	//waveCounter.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
+	world.addChild(waveCounter);
+	
 	mySprite.update = function(d) {
 		gameScreen.scrollY += .5;
 		scoreDisplay.text = "Score: "+score;
+		waveCounter.text = "Wave: " +wave+ "/"+maxWaves;
 		//level generation based on level number
 		//getLevel(levels);
     	//console.log(score);
@@ -785,6 +795,10 @@ gameScreen.init = function() {
 			R2.rotation += playerRot;
 		}
 		
+		if (gInput.cheat) {
+			wave = maxWaves-1;
+		}
+		
 		
 		//Rosetta collides with an asteroid
 		for(i = 0; i < parts.length; i++){
@@ -832,100 +846,6 @@ gameScreen.init = function() {
 				x = centerX + (distance*Math.cos(theta));
 				y = centerY + (distance*Math.sin(theta));
 				//console.log("Q4 rotL");
-			/*}
-			else if(gInput.rotR){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
-				//console.log("Q4 rotR");
-			}
-		}
-		else if(x > centerX && y < centerY){ //Q1
-			if(gInput.rotL){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
-				console.log("Q1 rotL");
-			}
-			else if(gInput.rotR){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
-				console.log("Q1 rotR");
-			}
-		}
-		else if(x < centerX && y > centerY){ //Q3
-			if(gInput.rotL){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
-				console.log("Q3 rotL");
-			}
-			else if(gInput.rotR){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
-				console.log("Q3 rotR");
-			}
-		}
-		else if(x < centerX && y < centerY){ //Q2
-			if(gInput.rotL){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
-				console.log("Q2 rotL");
-			}
-			else if(gInput.rotR){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
-				console.log("Q2 rotR");
-			}
-		}
-		else if(x == centerX && y > centerY){ //down
-			if(gInput.rotL){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
-				console.log("down rotL");
-			}
-			else if(gInput.rotR){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
-				console.log("down rotR");
-			}
-		}
-		else if(x == centerX && y < centerY){ //up
-			if(gInput.rotL){
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
-				console.log("up rotL");
-			}
-			else if(gInput.rotR){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
-				console.log("up rotR");
-			}
-		}
-		else if(x > centerX && y == centerY){ //right
-			if(gInput.rotL){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
-				console.log("right rotL");
-			}
-			else if(gInput.rotR){
-				x = centerX + (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
-				console.log("right rotR");
-			}
-		}
-		else if(x < centerX && y == centerY){ //left
-			if(gInput.rotL){
-				//console.log("l");
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY + (distance*Math.sin(theta));
-				console.log("left rotL");
-			}
-			else if(gInput.rotR){
-				//console.log("l");
-				x = centerX - (distance*Math.cos(theta));
-				y = centerY - (distance*Math.sin(theta));
-				console.log("left rotR");
-			}
-		}*/
-		//console.log(x);
 		var array = [x,y];
 		return array;
 	}
