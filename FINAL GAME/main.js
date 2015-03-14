@@ -526,7 +526,7 @@ function getWave(){ //CALLED IN: Particle update
 function endLevel(){ //CALLED IN: probe update (which is in init)
 	//if probe goes off top of the screeen
 	//console.log("endLevel() called");
-	if(probe.y < 0+probe.width/2){
+	if(probe.y < -30){
 		screenMan.push(win1);
     	levels++;
     	wave = 0;
