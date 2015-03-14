@@ -603,6 +603,17 @@ mainMenu.init = function() {
 	instructions.func = function() {
 		screenMan.push(instructionsMenu);
 	}
+	
+	var info = new TextButton("Information");
+	info.y = 100;
+	info.center = true;
+	info.label.dropShadow = true;
+	info.label.fontSize = 30;
+	info.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
+	this.gui.addChild(info);
+	info.func = function() {
+		screenMan.push(infoMenu);
+	}
 
 }
 var gameScreen = new Screen(false, true);
@@ -940,6 +951,29 @@ instructionsMenu.init = function() {
 	this.gui.addChild(returnToMenu);
 	returnToMenu.func = function() {
 		screenMan.remove(instructionsMenu);
+		screenMan.remove(gameScreen);
+	}
+}
+
+var infoMenu = new Screen(false, true);
+//Set init properties
+infoMenu.init = function() {
+	//Bg fills canvas
+	this.width = canvas.width;
+	this.height = canvas.height;
+	infoMenu.image = Textures.load("Pics/about.png");
+	this.gui.x = canvas.width / 2;
+	this.gui.y = canvas.height / 2;
+
+	var returnToMenu = new TextButton("Main Menu");
+	returnToMenu.y = 280;
+	returnToMenu.x = -70;
+	returnToMenu.label.dropShadow = true;
+	returnToMenu.label.fontSize = 30;
+	returnToMenu.setLabelColors("#aaaaaa", "#ffffff", "#ff0000");
+	this.gui.addChild(returnToMenu);
+	returnToMenu.func = function() {
+		screenMan.remove(infoMenu);
 		screenMan.remove(gameScreen);
 	}
 }
