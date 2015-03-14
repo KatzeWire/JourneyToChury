@@ -262,6 +262,15 @@ Particle.prototype.update = function(d){
     
     //console.log(this.rotSpeed);
     this.rotation += this.rotSpeed;
+    
+	/*for(var i = 0; i < parts.length; i++){
+		if(parts[i].y > canvas.height-parts[i].yoffset){
+       	//if(parts[i].y > canvas.height/2){
+           	world.removeChild(parts[i]);
+           	//parts.pop(parts[i]);
+           	console.log("callcount");
+		}
+    }*/
  
     if(this.y > canvas.height-this.yoffset){
         this.x = canvas.width*Math.random();
@@ -277,7 +286,7 @@ Particle.prototype.update = function(d){
     } 
     //callWave();
     //increaseWave();
-    if(wave == 1){ //23 is good for this
+    if(wave == 23){ //23 is good for this
     	for(var i = 0; i < parts.length; i++){
     		parts[i].x = canvas.width*Math.random();
         	parts[i].y = this.yoffset;
@@ -367,6 +376,15 @@ Mineral.prototype.update = function(d){
     
     //console.log(this.rotSpeed);
     this.rotation += this.rotSpeed;
+    
+	/*for(var i = 0; i < parts.length; i++){
+		if(parts[i].y > canvas.height-parts[i].yoffset){
+       	//if(parts[i].y > canvas.height/2){
+           	world.removeChild(parts[i]);
+           	//parts.pop(parts[i]);
+           	console.log("callcount");
+		}
+    }*/
  
     if(this.y > canvas.height-this.yoffset){
         this.x = canvas.width*Math.random();
@@ -381,7 +399,7 @@ Mineral.prototype.update = function(d){
     } 
     //callWave();
     //increaseWave();
-    if(wave == 1){ //23 is good for this
+    if(wave == 23){ //23 is good for this
     	for(var i = 0; i < mineral.length; i++){
     		mineral[i].x = canvas.width*Math.random();
         	mineral[i].y = this.yoffset;
@@ -448,25 +466,55 @@ function Level(s, w){ //speed, wave CALLED IN: Init
 }
 
 function getWave(){ //CALLED IN: Particle update
+	//console.log(wave);
+    //remove asteroids that are falling
+	//console.log(parts.length);
+    /*for(var i = 0; i < parts.length; i++){
+    	//console.log(parts.length);
+    	world.removeChild(parts[i]);
+    	//deleteAll(parts[i]);
+        //parts.pop(parts[i]);  //try putting this in another for loop
+        //console.log("callcount");
+    }*/
     //new comet spawn
+    //var newComet = new Comet(Math.floor(Math.random() * -26) - 70, Math.floor(Math.random() * 20) - 70);
     newComet = new Comet(25, 25);
     newComet.rotSpeed = -maxRot+(2*maxRot)*Math.random();
+    //console.log(newComet.x);
     if(cometCount == 0){
     	world.addChild(newComet);
     	cometCount++;
     }
     //Allow shooting one probe
     probeCounter = 0;
+    //if probe goes off the top of the screen
+    /*if(probe.y < 0+probe.yoffset){
+    	levels++;
+    	wave = 0;
+    	world.removeChild(newComet);
+    	world.removeChild(probe);
+    	//break;
+    }else if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, newComet.radius)){ //if probe hits the comet
+    	levels++;
+    	wave = 0;
+    	//score += 10;
+    	world.removeChild(newComet);
+    	world.removeChild(probe);
+    	//break;
+    }*/
 }
 
 function endLevel(){ //CALLED IN: probe update (which is in init)
 	//if probe goes off top of the screeen
+	//console.log("endLevel() called");
 	if(probe.y < 0+probe.width/2){
 		screenMan.push(win1);
     	levels++;
     	wave = 0;
     	world.removeChild(newComet);
     	world.removeChild(probe);
+    	//deleteAll(newComet);
+    	//deleteAll(probe);
     	getLevel(levels);
     	console.log("Probe off screen");
     	//break;
@@ -477,8 +525,11 @@ function endLevel(){ //CALLED IN: probe update (which is in init)
     	score += 10;
     	world.removeChild(newComet);
     	world.removeChild(probe);
+    	//deleteAll(newComet);
+    	//deleteAll(probe);
     	getLevel(levels);
     	console.log("Probe hits Comet");
+    	//break;
     }
 }
 
@@ -699,18 +750,19 @@ gameScreen.init = function() {
 
 		//rotation
 		if (gInput.rotL) {
-			this.rotation -= 0.05;
-			L1.rotation -= 0.05;
-			L2.rotation -= 0.05;
-			R1.rotation -= 0.05;
-			R2.rotation -= 0.05;
+			this.rotation -= 0.08;
+			L1.rotation -= 0.08;
+			L2.rotation -= 0.08;
+			R1.rotation -= 0.08;
+			R2.rotation -= 0.08;
 		}
 
 		if (gInput.rotR) {
-			this.rotation += 0.05;
-			L1.rotation += 0.05;
-			L2.rotation += 0.05;
-			R1.rotation += 0.05;
+			this.rotation += 0.08;
+			L1.rotation += 0.08;
+			L2.rotation += 0.08;
+			R1.rotation += 0.08;
+			R2.rotation += 0.08;
 		}
 		
 		
@@ -755,8 +807,105 @@ gameScreen.init = function() {
 	}
 	
 	function collision (x, y, centerX, centerY, distance, theta){
+		//if(x > centerX && y > centerY){ //Q4
+			//if(gInput.rotL){
 				x = centerX + (distance*Math.cos(theta));
 				y = centerY + (distance*Math.sin(theta));
+				//console.log("Q4 rotL");
+			/*}
+			else if(gInput.rotR){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				//console.log("Q4 rotR");
+			}
+		}
+		else if(x > centerX && y < centerY){ //Q1
+			if(gInput.rotL){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("Q1 rotL");
+			}
+			else if(gInput.rotR){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("Q1 rotR");
+			}
+		}
+		else if(x < centerX && y > centerY){ //Q3
+			if(gInput.rotL){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("Q3 rotL");
+			}
+			else if(gInput.rotR){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("Q3 rotR");
+			}
+		}
+		else if(x < centerX && y < centerY){ //Q2
+			if(gInput.rotL){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("Q2 rotL");
+			}
+			else if(gInput.rotR){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("Q2 rotR");
+			}
+		}
+		else if(x == centerX && y > centerY){ //down
+			if(gInput.rotL){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("down rotL");
+			}
+			else if(gInput.rotR){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("down rotR");
+			}
+		}
+		else if(x == centerX && y < centerY){ //up
+			if(gInput.rotL){
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("up rotL");
+			}
+			else if(gInput.rotR){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("up rotR");
+			}
+		}
+		else if(x > centerX && y == centerY){ //right
+			if(gInput.rotL){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("right rotL");
+			}
+			else if(gInput.rotR){
+				x = centerX + (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("right rotR");
+			}
+		}
+		else if(x < centerX && y == centerY){ //left
+			if(gInput.rotL){
+				//console.log("l");
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY + (distance*Math.sin(theta));
+				console.log("left rotL");
+			}
+			else if(gInput.rotR){
+				//console.log("l");
+				x = centerX - (distance*Math.cos(theta));
+				y = centerY - (distance*Math.sin(theta));
+				console.log("left rotR");
+			}
+		}*/
+		//console.log(x);
 		var array = [x,y];
 		return array;
 	}
@@ -809,23 +958,9 @@ gameScreen.init = function() {
 	}
 	
 	probe.update = function(d) {
-			endLevel();
 			this.y -= proSpeed;
-			if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, 25)){ //if probe hits the comet
-    	screenMan.push(win2);
-    	levels++;
-    	wave = 0;
-    	score += 10;
-    	world.removeChild(newComet);
-    	world.removeChild(probe);
-    	//deleteAll(newComet);
-    	//deleteAll(probe);
-    	getLevel(levels);
-    	console.log("Probe hits Comet");
-    	//break;
-    }
     		//console.log("probe update");
-    		
+    		endLevel();
 	}
 		
 	//level genteration based on level number
