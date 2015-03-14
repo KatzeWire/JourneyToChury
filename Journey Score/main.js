@@ -286,7 +286,7 @@ Particle.prototype.update = function(d){
     } 
     //callWave();
     //increaseWave();
-    if(wave == 23){ //23 is good for this
+    if(wave == 1){ //23 is good for this
     	for(var i = 0; i < parts.length; i++){
     		parts[i].x = canvas.width*Math.random();
         	parts[i].y = this.yoffset;
@@ -399,7 +399,7 @@ Mineral.prototype.update = function(d){
     } 
     //callWave();
     //increaseWave();
-    if(wave == 23){ //23 is good for this
+    if(wave == 1){ //23 is good for this
     	for(var i = 0; i < mineral.length; i++){
     		mineral[i].x = canvas.width*Math.random();
         	mineral[i].y = this.yoffset;
@@ -961,6 +961,19 @@ gameScreen.init = function() {
 			this.y -= proSpeed;
     		//console.log("probe update");
     		endLevel();
+    		if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, 25)){ //if probe hits the comet
+    	screenMan.push(win2);
+    	levels++;
+    	wave = 0;
+    	score += 10;
+    	world.removeChild(newComet);
+    	world.removeChild(probe);
+    	//deleteAll(newComet);
+    	//deleteAll(probe);
+    	getLevel(levels);
+    	console.log("Probe hits Comet");
+    	//break;
+    }
 	}
 		
 	//level genteration based on level number
