@@ -14,6 +14,7 @@ var mineral = [];
 var mineParts = 5;
 //Wave Counter
 var wave = 0;
+var maxWaves = 23;
 //Level Counter
 var levels = 1;
 
@@ -26,6 +27,9 @@ var newComet;
 
 var hitCount = 0;
 var hitTimer = 0;
+
+var playerRot = 0.05;
+
 //Screen class
 function Screen(alwaysUpdate, alwaysDraw) {
 	//Copy properties
@@ -286,7 +290,7 @@ Particle.prototype.update = function(d){
     } 
     //callWave();
     //increaseWave();
-    if(wave == 1){ //23 is good for this
+    if(wave == maxWaves){ //23 is good for this
     	for(var i = 0; i < parts.length; i++){
     		parts[i].x = canvas.width*Math.random();
         	parts[i].y = this.yoffset;
@@ -343,7 +347,23 @@ Comet.prototype.update = function(d){
     if(this.y < 0+this.width/2){
         ySpeed = -ySpeed;
     }
-	
+    //console.log("newComet.x="+newComet.x);
+	//console.log("newComet.y="+newComet.y);
+	//console.log("Comet.x="+Comet.x);
+	//console.log("Comet.y="+Comet.y);
+	if(cirOnCir(probe.x, probe.y, this.x, this.y, 12.5, 25)){ //if probe hits the comet
+    	screenMan.push(win2);
+    	//levels++;
+    	//wave = 0;
+    	score += 10;
+    	//world.removeChild(newComet);
+    	world.removeChild(probe);
+    	//deleteAll(newComet);
+    	//deleteAll(probe);
+    	//getLevel(levels);
+    	console.log("Probe hits Comet");
+    	//break;
+    }
 }
 
 //asteroid initliazation function
@@ -399,7 +419,7 @@ Mineral.prototype.update = function(d){
     } 
     //callWave();
     //increaseWave();
-    if(wave == 1){ //23 is good for this
+    if(wave == maxWaves){ //23 is good for this
     	for(var i = 0; i < mineral.length; i++){
     		mineral[i].x = canvas.width*Math.random();
         	mineral[i].y = this.yoffset;
@@ -707,7 +727,7 @@ gameScreen.init = function() {
     	//console.log(score);
     	if (wave == 0 && parts[0].y > 100){
 			Minerals(2);
-			console.log("Call Minerals()");
+			//console.log("Call Minerals()");
 		}
 		
 		//Define a speed
@@ -750,19 +770,19 @@ gameScreen.init = function() {
 
 		//rotation
 		if (gInput.rotL) {
-			this.rotation -= 0.08;
-			L1.rotation -= 0.08;
-			L2.rotation -= 0.08;
-			R1.rotation -= 0.08;
-			R2.rotation -= 0.08;
+			this.rotation -= playerRot;
+			L1.rotation -= playerRot;
+			L2.rotation -= playerRot;
+			R1.rotation -= playerRot;
+			R2.rotation -= playerRot;
 		}
 
 		if (gInput.rotR) {
-			this.rotation += 0.08;
-			L1.rotation += 0.08;
-			L2.rotation += 0.08;
-			R1.rotation += 0.08;
-			R2.rotation += 0.08;
+			this.rotation += playerRot;
+			L1.rotation += playerRot;
+			L2.rotation += playerRot;
+			R1.rotation += playerRot;
+			R2.rotation += playerRot;
 		}
 		
 		
@@ -958,22 +978,22 @@ gameScreen.init = function() {
 	}
 	
 	probe.update = function(d) {
-			this.y -= proSpeed;
-    		//console.log("probe update");
-    		endLevel();
-    		if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, 25)){ //if probe hits the comet
-    	screenMan.push(win2);
-    	levels++;
-    	wave = 0;
-    	score += 10;
-    	world.removeChild(newComet);
-    	world.removeChild(probe);
-    	//deleteAll(newComet);
-    	//deleteAll(probe);
-    	getLevel(levels);
-    	console.log("Probe hits Comet");
-    	//break;
-    }
+		this.y -= proSpeed;
+    	//console.log("probe update");
+    	endLevel();
+    	/*if(cirOnCir(probe.x, probe.y, newComet.x, newComet.y, 12.5, 25)){ //if probe hits the comet
+    		screenMan.push(win2);
+    		levels++;
+    		wave = 0;
+    		score += 10;
+    		world.removeChild(newComet);
+    		world.removeChild(probe);
+    		//deleteAll(newComet);
+    		//deleteAll(probe);
+    		getLevel(levels);
+    		console.log("Probe hits Comet");
+    		//break;
+    	}*/
 	}
 		
 	//level genteration based on level number
