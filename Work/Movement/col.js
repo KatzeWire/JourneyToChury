@@ -1,3 +1,0 @@
-function collision(rect, circ){
-	
-}
